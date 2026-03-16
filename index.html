@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+<meta name="description" content="Plateforme Mewahou — Co-financement participatif du Groupement Batchingou, Paysage Ndoubock, Cameroun.">
+<meta name="theme-color" content="#064e3b">
+<title>Plateforme Mewahou v9.0 — Fourmis Magnants Batchingou</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --g:#16a34a;--gd:#15803d;--gl:#22c55e;--y:#eab308;--yd:#ca8a04;--yl:#fde047;
+  --r:#dc2626;--bg:#f0f5f1;--dark:#111827;--mid:#374151;--light:#6b7280;
+  --bdr:#e5e7eb;--ok:#10b981;--warn:#f59e0b;--err:#ef4444;
+  --forest:#022c1e;--deep:#064e3b;--moss:#0a7a50;
+  --card-sh:0 2px 12px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.05);
+  --card-shL:0 10px 40px -8px rgba(0,0,0,.18),0 2px 8px rgba(0,0,0,.06);
+  --card-shXL:0 25px 60px -12px rgba(0,0,0,.28);
+  --radius:.875rem;--radiusLG:1.25rem;--radiusXL:1.75rem;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --tr:.22s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--dark);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+button{font-family:var(--font)}
+::-webkit-scrollbar{width:5px;height:4px}
+::-webkit-scrollbar-track{background:#f1f5f1}
+::-webkit-scrollbar-thumb{background:var(--g);border-radius:3px}
+h1,h2,h3,h4{line-height:1.25;letter-spacing:-.02em}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .6rem;border-radius:1rem;font-size:.68rem;font-weight:700;white-space:nowrap}
+.cat-badge{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .55rem;border-radius:.4rem;font-size:.7rem;font-weight:700}
+.cat-agri{background:#fef3c7;color:#92400e}.cat-infra{background:#dbeafe;color:#1e40af}
+.cat-culture{background:#ede9fe;color:#5b21b6}.cat-amenag{background:#e0f2fe;color:#075985}
+.cat-numerique{background:#f3e8ff;color:#6b21a8}
+.prio-badge{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .6rem;border-radius:1rem;font-size:.68rem;font-weight:700}
+.prio-urgent{background:#dc2626;color:#fff;animation:urgentPulse 1.8s infinite}
+.prio-high{background:#f59e0b;color:#fff}.prio-medium{background:#3b82f6;color:#fff}
+@keyframes urgentPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.4)}50%{box-shadow:0 0 0 7px rgba(220,38,38,0)}}
+.status-active{background:#d1fae5;color:#065f46}.status-planned{background:#dbeafe;color:#1e40af}.status-completed{background:#fef3c7;color:#92400e}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  padding:.55rem 1rem;border:none;border-radius:.6rem;font-weight:700;cursor:pointer;
+  transition:all var(--tr);font-size:.825rem;touch-action:manipulation;white-space:nowrap;font-family:var(--font)}
+.btn:active{transform:scale(.93)!important}
+.btn-g{background:var(--g);color:#fff}.btn-g:hover{background:var(--gd);box-shadow:0 4px 14px rgba(22,163,74,.35)}
+.btn-y{background:var(--y);color:#1a1a1a}.btn-ok{background:var(--ok);color:#fff}.btn-ok:hover{background:#059669}
+.btn-r{background:var(--err);color:#fff}.btn-r:hover{background:#b91c1c}
+.btn-w{background:rgba(255,255,255,.95);color:#065f46;border:1.5px solid rgba(6,78,59,.2)}
+.btn-w:hover{background:#fff;box-shadow:var(--card-sh)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.btn-ghost:hover{background:rgba(255,255,255,.22)}
+.btn-ic{padding:.55rem;min-width:2.4rem;aspect-ratio:1}
+.btn-lg{padding:.85rem 1.5rem;font-size:.94rem;border-radius:.75rem}
+.btn-gradient{background:linear-gradient(135deg,var(--y),#ca8a04);color:#1a1a1a;box-shadow:0 4px 18px rgba(234,179,8,.45)}
+.btn-gradient:hover{transform:translateY(-2px)!important;box-shadow:0 8px 28px rgba(234,179,8,.55)}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,var(--forest) 0%,var(--deep) 50%,#0a5e40 100%);
+  color:#fff;padding:.5rem 1rem;position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.45)}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto;gap:.75rem}
+.logo{display:flex;align-items:center;gap:.7rem;flex:1;min-width:0;cursor:pointer;padding:.25rem 0}
+.logo-emblem{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.06);
+  border:2px solid rgba(234,179,8,.7);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;box-shadow:0 0 20px rgba(234,179,8,.4),0 0 0 5px rgba(234,179,8,.12);
+  transition:transform .3s;overflow:hidden;position:relative}
+.logo-emblem svg{width:36px;height:36px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6))}
+.logo:hover .logo-emblem{transform:rotate(-12deg) scale(1.08)}
+.logo-txt h1{font-size:.95rem;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo-txt p{font-size:.6rem;opacity:.78;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(min-width:640px){.logo-txt h1{font-size:1.15rem}.logo-txt p{font-size:.65rem}}
+.hdr-actions{display:flex;align-items:center;gap:.35rem;flex-shrink:0}
+.hdr-actions .btn{font-size:.72rem;padding:.42rem .7rem}
+
+/* NAV */
+.nav{background:rgba(2,24,14,.97);border-bottom:2px solid rgba(234,179,8,.35);
+  overflow-x:auto;-webkit-overflow-scrolling:touch;position:sticky;top:3.9rem;z-index:190;
+  box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.nav-inner{display:flex;max-width:1400px;margin:0 auto;min-width:min-content;padding:0 .2rem}
+.nav-tab{flex:1;min-width:72px;padding:.55rem .35rem .45rem;border:none;background:none;cursor:pointer;
+  color:rgba(255,255,255,.55);border-bottom:3px solid transparent;transition:all .2s;
+  display:flex;flex-direction:column;align-items:center;gap:.1rem;white-space:nowrap}
+.nav-tab .ntab-ico{font-size:1.1rem;transition:transform .2s}
+.nav-tab .ntab-lbl{font-size:.63rem;font-weight:700;line-height:1;letter-spacing:.02em}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,.05)}
+.nav-tab.on{color:var(--y);border-bottom-color:var(--y)}
+.nav-tab.on .ntab-ico{transform:scale(1.25)}
+.nav-badge{background:var(--r);color:#fff;padding:.05rem .35rem;border-radius:1rem;font-size:.55rem;font-weight:800}
+
+/* WRAP */
+.wrap{max-width:1400px;margin:0 auto;padding:.875rem}
+
+/* QUICK STATS */
+.qstats{background:linear-gradient(135deg,var(--forest),var(--deep));
+  border-radius:var(--radiusLG);padding:.75rem 1rem;margin-bottom:1rem;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;text-align:center;
+  border:1px solid rgba(234,179,8,.2);box-shadow:var(--card-shL);position:relative;overflow:hidden}
+.qstats::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(234,179,8,.06) 0%,transparent 70%);pointer-events:none}
+@media(max-width:480px){.qstats{grid-template-columns:repeat(3,1fr)}}
+.qs{padding:.3rem;position:relative;z-index:1}
+.qs-v{font-size:1.3rem;font-weight:900;color:var(--y);line-height:1;font-variant-numeric:tabular-nums}
+.qs-l{font-size:.56rem;color:rgba(255,255,255,.6);margin-top:.15rem;text-transform:uppercase;letter-spacing:.05em}
+.status-ribbon{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.sync-pill{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .75rem;border-radius:1rem;font-size:.75rem;font-weight:700}
+.sync-on{background:#d1fae5;color:#065f46}.sync-off{background:#fef3c7;color:#92400e}
+.sync-dot{width:7px;height:7px;border-radius:50%;animation:pulse 2s infinite}
+.sync-on .sync-dot{background:#16a34a}.sync-off .sync-dot{background:#f59e0b}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* CHANTIER ACTIF BANNER */
+.chantier-banner{background:linear-gradient(135deg,#0d2d12,#1a4a00);border:1.5px solid rgba(126,200,80,.5);
+  border-radius:var(--radius);padding:.75rem 1rem;margin-bottom:1rem;
+  display:flex;align-items:center;gap:.875rem;box-shadow:0 4px 18px rgba(126,200,80,.15)}
+.cb-dot{width:10px;height:10px;border-radius:50%;background:#7ec850;flex-shrink:0;
+  animation:pulse 1.4s infinite;box-shadow:0 0 8px rgba(126,200,80,.7)}
+.cb-txt{flex:1;font-size:.8rem;color:#b8e890;line-height:1.55}
+.cb-txt strong{color:#d8f8a8;font-size:.85rem}
+.cb-txt small{display:block;font-size:.7rem;opacity:.75;margin-top:.15rem}
+
+/* HERO */
+.hero{position:relative;border-radius:var(--radiusXL);overflow:hidden;
+  min-height:500px;background:#0d2518;box-shadow:var(--card-shXL);margin-bottom:1.5rem}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 40%;transition:opacity .5s}
+.hero-bg-default{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1400 520'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%2389c5a0'/%3E%3Cstop offset='.5' stop-color='%234a9e6b'/%3E%3Cstop offset='1' stop-color='%23235e35'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1400' height='520' fill='url(%23sky)'/%3E%3Cellipse cx='700' cy='160' rx='120' ry='60' fill='%23f0f4e8' opacity='.6'/%3E%3Cpath d='M0,380 L200,300 L400,260 L600,230 L700,215 L800,220 L1000,250 L1200,290 L1400,330 L1400,520 L0,520Z' fill='%23356b42' opacity='.85'/%3E%3Cpath d='M0,420 L350,390 L700,370 L1050,378 L1400,400 L1400,520 L0,520Z' fill='%23275232'/%3E%3Cpath d='M0,460 L350,445 L700,438 L1050,442 L1400,455 L1400,520 L0,520Z' fill='%231a3d22'/%3E%3C/svg%3E");
+  opacity:.55}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(2,20,12,.2) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.82) 100%)}
+.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ant{position:absolute;font-size:.95rem;bottom:10px;animation:antWalk linear infinite}
+.ant:nth-child(1){animation-duration:22s;bottom:10px}
+.ant:nth-child(2){animation-duration:28s;bottom:22px;animation-delay:5s}
+.ant:nth-child(3){animation-duration:19s;bottom:7px;animation-delay:11s}
+.ant:nth-child(4){animation-duration:32s;bottom:28px;animation-delay:3s}
+.ant:nth-child(5){animation-duration:24s;bottom:16px;animation-delay:15s}
+.ant:nth-child(6){animation-duration:26s;bottom:5px;animation-delay:8s}
+@keyframes antWalk{0%{transform:translateX(-40px)}100%{transform:translateX(1450px)}}
+.hero-content{position:relative;z-index:2;padding:2rem 1.75rem 2.5rem;color:#fff}
+.hero-live-badge{display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(234,179,8,.18);backdrop-filter:blur(12px);
+  border:1px solid rgba(234,179,8,.55);border-radius:2rem;
+  padding:.38rem 1rem;font-size:.72rem;font-weight:800;margin-bottom:1rem;
+  animation:fadeUp .5s ease;letter-spacing:.03em;text-transform:uppercase}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--y);animation:blink 1.2s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(234,179,8,.5)}50%{opacity:.4;box-shadow:0 0 0 5px rgba(234,179,8,0)}}
+.hero-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;line-height:1.1;margin-bottom:.6rem;
+  text-shadow:0 3px 24px rgba(0,0,0,.7);animation:fadeUp .6s ease}
+.hero-title span{color:var(--yl)}
+.hero-sub{font-size:clamp(.85rem,2vw,1rem);opacity:.95;margin-bottom:1rem;line-height:1.75;
+  animation:fadeUp .7s ease;max-width:640px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.hero-quote{border-left:3px solid var(--y);padding-left:.875rem;margin-bottom:1.1rem;
+  font-style:italic;font-size:.82rem;opacity:.92;animation:fadeUp .8s ease;max-width:560px;line-height:1.65}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.6rem;animation:fadeUp .9s ease;margin-bottom:1.25rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.ticker-wrap{background:rgba(0,0,0,.55);backdrop-filter:blur(10px);border-radius:.6rem;
+  padding:.42rem .875rem;display:flex;align-items:center;gap:.6rem;overflow:hidden;
+  border:1px solid rgba(234,179,8,.25);animation:fadeUp 1s ease}
+.ticker-tag{background:var(--y);color:#1a1a1a;padding:.12rem .55rem;border-radius:.35rem;
+  font-weight:800;font-size:.63rem;white-space:nowrap;flex-shrink:0;letter-spacing:.04em}
+.ticker-track{overflow:hidden;flex:1;cursor:pointer}
+.ticker-content{white-space:nowrap;display:inline-block;
+  animation:tickerScroll 70s linear infinite;font-size:.73rem;font-weight:600}
+.ticker-content:hover{animation-play-state:paused}
+@keyframes tickerScroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+.hero-stats-row{display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:1.25rem;padding-top:1rem;
+  border-top:1px solid rgba(255,255,255,.18)}
+.hstat{text-align:center}
+.hstat-v{font-size:1.4rem;font-weight:900;color:var(--y);line-height:1;font-variant-numeric:tabular-nums}
+.hstat-l{font-size:.6rem;opacity:.72;text-transform:uppercase;letter-spacing:.05em;margin-top:.1rem}
+.hero-upload-btn{position:absolute;bottom:.875rem;right:.875rem;z-index:3;
+  display:flex;align-items:center;gap:.35rem;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);
+  color:#fff;padding:.4rem .75rem;border-radius:.5rem;border:1px solid rgba(255,255,255,.25);
+  cursor:pointer;font-size:.72rem;font-weight:600;transition:all .2s}
+.hero-upload-btn:hover{background:rgba(0,0,0,.75)}
+
+/* QUICK ACTIONS */
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.5rem}
+@media(max-width:520px){.qa-grid{grid-template-columns:repeat(2,1fr)}}
+.qa-card{background:#fff;border-radius:var(--radius);padding:1rem .75rem;text-align:center;
+  cursor:pointer;transition:all var(--tr);box-shadow:var(--card-sh);border:2px solid transparent}
+.qa-card:hover{border-color:var(--g);box-shadow:0 8px 24px rgba(22,163,74,.2);transform:translateY(-3px)}
+.qa-card:active{transform:scale(.94)!important}
+.qa-icon{font-size:2.1rem;margin-bottom:.4rem;display:block;transition:transform .25s}
+.qa-card:hover .qa-icon{transform:scale(1.15) rotate(-8deg)}
+.qa-label{font-size:.78rem;font-weight:800;color:var(--dark);line-height:1.3}
+.qa-sub{font-size:.63rem;color:var(--light);margin-top:.2rem;opacity:0;transform:translateY(3px);transition:all .2s}
+.qa-card:hover .qa-sub{opacity:1;transform:translateY(0)}
+
+/* SECTION HEADERS */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;flex-wrap:wrap;gap:.5rem}
+.sec-title{font-size:1.05rem;font-weight:800;display:flex;align-items:center;gap:.45rem;color:var(--dark)}
+.sec-title-line{width:3px;height:1.2em;background:linear-gradient(to bottom,var(--g),var(--y));border-radius:2px;flex-shrink:0}
+
+/* CHRONOLOGIE MINI */
+.chrono-strip{background:#fff;border-radius:var(--radius);padding:.875rem 1rem;margin-bottom:1.5rem;box-shadow:var(--card-sh)}
+.chrono-steps{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.25rem;scrollbar-width:none}
+.chrono-steps::-webkit-scrollbar{display:none}
+.cs-item{display:flex;flex-direction:column;align-items:center;min-width:110px;position:relative;flex:1}
+.cs-item::after{content:'';position:absolute;top:14px;left:50%;width:100%;height:2px;background:var(--bdr);z-index:0}
+.cs-item:last-child::after{display:none}
+.cs-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;position:relative;z-index:1;flex-shrink:0;border:2px solid var(--bdr);background:#fff}
+.cs-dot.done{border-color:var(--g);background:#f0fdf4}
+.cs-dot.active{border-color:var(--y);background:#fefce8;box-shadow:0 0 0 4px rgba(234,179,8,.2);animation:urgentPulse 2s infinite}
+.cs-dot.future{border-color:var(--bdr);background:#f9fafb;opacity:.6}
+.cs-lbl{font-size:.6rem;font-weight:700;color:var(--mid);margin-top:.35rem;text-align:center;line-height:1.3;max-width:95px}
+.cs-date{font-size:.55rem;color:var(--light);margin-top:.1rem;text-align:center}
+
+/* CAROUSEL */
+.carousel-outer{margin-bottom:1.75rem}
+.carousel{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;padding-bottom:.75rem;padding-top:.25rem;
+  scrollbar-width:thin;scrollbar-color:var(--g) #f1f5f1}
+.carousel::-webkit-scrollbar{height:4px}
+.ccard{min-width:280px;max-width:300px;background:#fff;border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--card-shL);scroll-snap-align:start;flex-shrink:0;
+  cursor:pointer;transition:all var(--tr);border-top:4px solid transparent}
+.ccard:hover{transform:translateY(-5px);box-shadow:var(--card-shXL)}
+.ccard-urgent{border-top-color:var(--r)}.ccard-high{border-top-color:var(--warn)}.ccard-medium{border-top-color:#3b82f6}
+.ccard-img{height:140px;overflow:hidden;position:relative;background:#e5e7eb}
+.ccard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.ccard:hover .ccard-img img{transform:scale(1.06)}
+.ccard-img-ph{display:flex;align-items:center;justify-content:center;height:100%;
+  background:linear-gradient(135deg,var(--deep),var(--g));color:#fff}
+.ccard-img-icon{font-size:3.5rem;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.ccard-body{padding:.875rem}
+.ccard-title{font-size:.875rem;font-weight:800;margin-bottom:.3rem;line-height:1.3}
+.ccard-loc{font-size:.7rem;color:var(--light);margin-bottom:.5rem}
+.ccard-prog-hdr{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:.3rem;font-weight:700}
+.ccard-prog-bar{height:.42rem;background:var(--bdr);border-radius:1rem;overflow:hidden}
+.ccard-prog-fill{height:100%;background:linear-gradient(90deg,var(--ok),var(--g));border-radius:1rem;transition:width .8s}
+.ccard-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem}
+.ccard-amt{font-size:.82rem;font-weight:800;color:var(--g)}
+
+/* PROJECT GRID */
+.search-wrap{position:relative;margin-bottom:.875rem}
+.search-ico{position:absolute;left:.875rem;top:50%;transform:translateY(-50%);color:var(--light)}
+.search-in{width:100%;padding:.72rem .875rem .72rem 2.5rem;border:2px solid var(--bdr);
+  border-radius:.875rem;font-size:.94rem;transition:all .2s;background:#fff;font-family:var(--font)}
+.search-in:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(22,163,74,.1)}
+.filter-scroll{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.5rem;margin-bottom:1rem;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none}
+.filter-scroll::-webkit-scrollbar{display:none}
+.fbtn{padding:.42rem .875rem;border:2px solid var(--bdr);border-radius:1rem;background:#fff;
+  cursor:pointer;font-size:.78rem;font-weight:700;color:var(--light);white-space:nowrap;transition:all .2s;font-family:var(--font)}
+.fbtn.on{border-color:var(--g);color:var(--g);background:#f0fdf4}
+.fbtn:hover{border-color:var(--g);color:var(--g)}
+.pgrid{display:grid;gap:1.25rem;margin-bottom:2rem}
+@media(min-width:640px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1200px){.pgrid{grid-template-columns:repeat(3,1fr)}}
+.pcard{background:#fff;border-radius:var(--radiusLG);overflow:hidden;
+  box-shadow:var(--card-shL);transition:all var(--tr);border-left:5px solid transparent}
+.pcard:hover{transform:translateY(-4px);box-shadow:var(--card-shXL)}
+.pcard-urgent{border-left-color:var(--r)}.pcard-high{border-left-color:var(--warn)}.pcard-medium{border-left-color:#3b82f6}
+.pcard-hdr{color:#fff;padding:1.25rem;position:relative;overflow:hidden;min-height:130px}
+.pcard-hdr::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(45deg,rgba(255,255,255,.04) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.04) 50%,rgba(255,255,255,.04) 75%,transparent 75%);background-size:20px 20px;opacity:.5}
+.pcard-hdr-top{display:flex;justify-content:space-between;align-items:start;position:relative;z-index:1;flex-wrap:wrap;gap:.3rem;margin-bottom:.35rem}
+.pcard-icon{font-size:2.6rem;animation:iconFloat 3.5s ease-in-out infinite;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35))}
+.pcard-title{font-size:.94rem;font-weight:800;position:relative;z-index:1;line-height:1.35;margin-bottom:.3rem;text-shadow:0 1px 4px rgba(0,0,0,.3)}
+.pcard-loc{font-size:.72rem;opacity:.88;position:relative;z-index:1}
+.pcard-resp{font-size:.67rem;opacity:.78;position:relative;z-index:1;margin-top:.2rem}
+.pcard-body{padding:1rem}
+.pcard-desc{color:var(--light);font-size:.8rem;margin-bottom:.875rem;line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.prog-row{display:flex;justify-content:space-between;margin-bottom:.35rem;font-size:.8rem;font-weight:700}
+.prog-bar{height:.5rem;background:var(--bdr);border-radius:1rem;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--ok),var(--g));border-radius:1rem;transition:width 1s .2s}
+.milestone{margin-top:.5rem;padding:.4rem .7rem;background:linear-gradient(90deg,#f0fdf4,#ecfdf5);
+  border-radius:.45rem;border-left:3px solid var(--g);font-size:.7rem;color:#065f46;font-weight:700}
+.pstats-row{display:flex;gap:.5rem;margin:.6rem 0;flex-wrap:wrap}
+.pstat{flex:1;min-width:80px}
+.pstat-l{font-size:.62rem;color:var(--light);margin-bottom:.08rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.pstat-v{font-size:.88rem;font-weight:800;color:var(--g)}
+.pcard-btns{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-top:.875rem}
+.proj-media{position:relative;overflow:hidden;border-radius:.6rem;background:#e5e7eb;height:145px;margin-bottom:.875rem}
+.proj-media img,.proj-media video{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.proj-media:hover img{transform:scale(1.04)}
+.proj-media-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;
+  background:linear-gradient(135deg,#f3f4f6,#e5e7eb);gap:.4rem;cursor:pointer}
+.proj-media-ph:hover{background:linear-gradient(135deg,#d1fae5,#ecfdf5)}
+.proj-media-ph span{font-size:2.5rem}.proj-media-ph p{font-size:.7rem;font-weight:700;color:var(--light)}
+.media-overlay{position:absolute;bottom:.4rem;right:.4rem;display:flex;gap:.3rem;z-index:2}
+.media-btn{background:rgba(0,0,0,.65);color:#fff;border:none;border-radius:.3rem;padding:.22rem .45rem;font-size:.62rem;cursor:pointer;font-family:var(--font);transition:background .2s}
+.media-btn:hover{background:rgba(0,0,0,.85)}
+.media-btn-r{background:rgba(220,38,38,.85)}.media-btn-r:hover{background:rgba(185,28,28,.9)}
+
+/* BLOCS & COSODO */
+.blocs-section{background:linear-gradient(135deg,#0d2d12,#1a4d1f);border-radius:.75rem;
+  padding:.875rem;margin:.75rem 0;color:#fff;border:1px solid rgba(126,200,80,.3)}
+.blocs-title{font-size:.8rem;font-weight:800;color:#7ec850;margin-bottom:.6rem}
+.blocs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.35rem}
+.bloc-item{background:rgba(255,255,255,.08);border-radius:.45rem;padding:.45rem .55rem;text-align:center;border:1px solid rgba(255,255,255,.1)}
+.bloc-v{font-weight:800;color:#f5e06e;font-size:.8rem;display:block;margin-bottom:.1rem}
+.bloc-l{font-size:.63rem;opacity:.82;line-height:1.3}
+.blocs-footer{font-size:.68rem;opacity:.75;margin-top:.5rem;padding-top:.5rem;border-top:1px solid rgba(255,255,255,.12)}
+.cosodo-opts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem;margin:.5rem 0}
+.cosodo-opt{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:.5rem;padding:.5rem .55rem;
+  font-size:.7rem;cursor:pointer;transition:all .2s;text-align:center;font-weight:700;color:#065f46}
+.cosodo-opt:hover{background:#dcfce7;border-color:var(--g);transform:translateY(-1px)}
+.co-ico{font-size:1.05rem;display:block;margin-bottom:.15rem}
+.info-banner{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd;
+  border-radius:.5rem;padding:.55rem .75rem;margin:.5rem 0;font-size:.74rem;color:#1e40af;font-weight:600;display:flex;align-items:center;gap:.4rem}
+
+/* CHANTIER BOX dans projet */
+.chantier-box{background:linear-gradient(135deg,rgba(126,200,80,.1),rgba(34,100,10,.06));
+  border:1.5px solid rgba(126,200,80,.35);border-radius:.75rem;padding:.75rem;margin:.75rem 0}
+.chantier-box-title{font-size:.72rem;font-weight:800;color:#065f46;margin-bottom:.5rem;display:flex;align-items:center;gap:.35rem}
+.chantier-item{display:flex;align-items:flex-start;gap:.5rem;font-size:.75rem;color:#374151;line-height:1.6;padding:.2rem 0;border-bottom:1px solid rgba(22,163,74,.1)}
+.chantier-item:last-child{border-bottom:none}
+.chantier-item strong{color:#065f46}
+
+/* DASHBOARD */
+.stats-grid{display:grid;gap:.875rem;margin-bottom:1.5rem}
+@media(min-width:640px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{background:#fff;padding:1rem;border-radius:var(--radius);box-shadow:var(--card-sh);border-bottom:3px solid var(--g);transition:all var(--tr)}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--card-shL)}
+.sc-icon{font-size:1.9rem;margin-bottom:.3rem}
+.sc-label{font-size:.75rem;color:var(--light);margin-bottom:.15rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.sc-value{font-size:1.5rem;font-weight:900;color:var(--g);font-variant-numeric:tabular-nums}
+.tier-row{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.5rem;margin-bottom:1rem;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tier-row::-webkit-scrollbar{display:none}
+.tbadge{padding:.5rem .8rem;border-radius:.75rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;border:2.5px solid transparent;font-size:.8rem;font-family:var(--font)}
+.tbadge.on{border-color:rgba(255,255,255,.5);transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.t-all{background:#374151;color:#fff}.t-bronze{background:#d97706;color:#fff}.t-silver{background:#9ca3af;color:#fff}
+.t-gold{background:#eab308;color:#fff}.t-platinum{background:#60a5fa;color:#fff}.t-diamond{background:#a855f7;color:#fff}
+.c-item{background:#fff;border:2px solid var(--bdr);border-radius:var(--radius);padding:.875rem;margin-bottom:.75rem;transition:all .2s}
+.c-item.validated{border-color:var(--ok);background:#f0fdf4}
+.c-item.pending{border-color:var(--warn);background:#fffbeb}
+.c-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:.5rem;gap:.5rem}
+.c-name{font-weight:700;font-size:.9rem;margin-bottom:.1rem}
+.c-amount{font-size:1.1rem;font-weight:900;color:var(--g);font-variant-numeric:tabular-nums}
+.c-details{display:grid;gap:.3rem;font-size:.78rem;color:var(--light)}
+.c-actions{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem}
+.mini-chart{height:64px;display:flex;align-items:flex-end;gap:3px;padding:.5rem 0}
+.chart-bar{flex:1;background:linear-gradient(to top,var(--g),var(--ok));border-radius:3px 3px 0 0;opacity:.75;transition:all .35s;min-height:4px;cursor:pointer}
+.chart-bar:hover{opacity:1}
+
+/* HALL */
+.hall-hero{background:linear-gradient(135deg,var(--forest),var(--deep));color:#fff;border-radius:var(--radiusLG);padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--card-shL)}
+.hall-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem;margin-top:1rem}
+.hall-stat{background:rgba(255,255,255,.1);border-radius:.75rem;padding:.875rem .5rem;text-align:center;border:1px solid rgba(255,255,255,.12)}
+.hall-stat-v{font-size:1.5rem;font-weight:900;color:var(--y);font-variant-numeric:tabular-nums}
+.hall-stat-l{font-size:.68rem;opacity:.8;margin-top:.15rem}
+.hall-section{margin-bottom:1.75rem}
+.hall-title{font-size:1rem;font-weight:800;margin-bottom:.875rem;display:flex;align-items:center;gap:.5rem}
+
+/* MÉMOIRE section */
+.memoire-card{background:linear-gradient(135deg,#1a0028,#0d0014);border:1px solid rgba(153,0,204,.3);
+  border-radius:var(--radius);padding:1rem;margin-bottom:1rem;color:#fff}
+.memoire-title{font-size:.78rem;font-weight:800;color:#c890ff;margin-bottom:.6rem;letter-spacing:.03em;text-transform:uppercase}
+.memoire-item{display:flex;align-items:flex-start;gap:.6rem;padding:.45rem 0;border-bottom:1px solid rgba(153,0,204,.12);font-size:.82rem;color:#e0d8f0}
+.memoire-item:last-child{border-bottom:none}
+.memoire-item .mi-ico{flex-shrink:0;font-size:1rem;margin-top:.05rem}
+.mi-name{font-weight:700;color:#f0e8ff;line-height:1.3}
+.mi-role{font-size:.7rem;color:#a888c8;margin-top:.1rem;line-height:1.4}
+
+/* GOUVERNANCE widget */
+.gov-widget{background:#fff;border-radius:var(--radius);box-shadow:var(--card-sh);margin-bottom:1rem;overflow:hidden}
+.gw-hdr{background:linear-gradient(135deg,var(--forest),var(--deep));color:#fff;padding:.75rem 1rem;font-size:.82rem;font-weight:800}
+.gw-row{display:flex;align-items:center;gap:.75rem;padding:.6rem 1rem;border-bottom:1px solid var(--bdr);font-size:.8rem}
+.gw-row:last-child{border-bottom:none}
+.gw-role{font-size:.7rem;font-weight:700;color:var(--light);min-width:140px;line-height:1.3}
+.gw-name{font-weight:700;color:var(--dark);line-height:1.3;flex:1}
+.gw-name small{display:block;font-size:.65rem;font-weight:400;color:var(--light);margin-top:.1rem}
+
+/* FAQ */
+.faq-hero{background:linear-gradient(135deg,var(--forest),var(--deep));color:#fff;border-radius:var(--radiusLG);padding:1.25rem;margin-bottom:1.25rem;box-shadow:var(--card-shL)}
+.faq-item{background:#fff;border-radius:var(--radius);margin-bottom:.5rem;box-shadow:var(--card-sh);overflow:hidden;border:1.5px solid var(--bdr);transition:border-color .2s}
+.faq-item:hover{border-color:rgba(22,163,74,.3)}
+.faq-q{padding:.875rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:700;font-size:.875rem;gap:.5rem;transition:background .2s}
+.faq-q:hover{background:#f9fafb}
+.faq-a{padding:0 1rem;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s ease}
+.faq-a.open{max-height:600px;padding:.875rem 1rem}
+.faq-icon{font-size:1rem;flex-shrink:0;transition:transform .3s;color:var(--g)}
+.faq-cat-pill{font-size:.63rem;font-weight:800;padding:.12rem .42rem;border-radius:1rem;margin-right:.4rem}
+.fcp-cosodo{background:#d1fae5;color:#065f46}.fcp-contrib{background:#dbeafe;color:#1e40af}
+.fcp-tech{background:#ede9fe;color:#5b21b6}.fcp-gen{background:#fef3c7;color:#92400e}
+
+/* ACTUALITES */
+.actu-card{border:2px solid var(--bdr);border-radius:var(--radius);padding:1rem;margin-bottom:.875rem;transition:all .2s;background:#fff;box-shadow:var(--card-sh)}
+.actu-card:hover{border-color:rgba(22,163,74,.4);box-shadow:var(--card-shL);transform:translateY(-1px)}
+.actu-tag{font-size:.63rem;font-weight:800;padding:.15rem .45rem;border-radius:1rem;margin-bottom:.35rem;display:inline-block}
+.actu-agri{background:#fef3c7;color:#92400e}.actu-instit{background:#dbeafe;color:#1e40af}
+.actu-meteo{background:#e0f2fe;color:#075985}.actu-culture{background:#ede9fe;color:#5b21b6}
+
+/* ABOUT */
+.about-card{background:linear-gradient(145deg,var(--forest),var(--deep),#0a5e40);color:#fff;border-radius:var(--radiusLG);padding:1.75rem;margin-bottom:1.5rem;box-shadow:var(--card-shL);position:relative;overflow:hidden}
+.about-card::before{content:'🏔️';position:absolute;right:-10px;top:-20px;font-size:9rem;opacity:.05}
+.about-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem;margin-top:1.25rem}
+.astat{background:rgba(255,255,255,.1);border-radius:.75rem;padding:.875rem .5rem;text-align:center;border:1px solid rgba(255,255,255,.12)}
+.astat-v{font-size:1.5rem;font-weight:900;color:var(--y)}.astat-l{font-size:.68rem;opacity:.8;margin-top:.1rem}
+
+/* BOXES */
+.info-box{background:#dbeafe;border:2px solid #93c5fd;border-radius:var(--radius);padding:.875rem;margin-bottom:.875rem}
+.info-box-t{font-weight:800;margin-bottom:.35rem;color:#1e40af}
+.warn-box{background:#fffbeb;border:2px solid #f59e0b;border-radius:var(--radius);padding:.875rem;margin-bottom:.875rem}
+.warn-box-t{font-weight:800;margin-bottom:.3rem;color:#92400e}
+.ok-box{background:#d1fae5;border:2px solid var(--ok);border-radius:var(--radius);padding:.875rem;margin-bottom:.875rem}
+.transfer-box{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:2px solid #bbf7d0;border-radius:var(--radius);padding:1rem;margin-bottom:.875rem}
+.transfer-box-t{font-weight:800;color:#065f46;margin-bottom:.6rem;font-size:.88rem;display:flex;align-items:center;gap:.35rem}
+.transfer-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.06);flex-wrap:wrap}
+.transfer-row:last-child{border-bottom:none}
+.transfer-label{font-size:.78rem;color:var(--mid);font-weight:600;display:flex;align-items:center;gap:.35rem}
+.transfer-value{font-size:.78rem;font-weight:800;color:var(--dark);display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.copy-btn{background:#fff;border:1.5px solid #bbf7d0;border-radius:.35rem;padding:.15rem .45rem;font-size:.65rem;cursor:pointer;color:#065f46;font-family:var(--font);font-weight:700;transition:all .2s}
+.copy-btn:hover{background:#d1fae5}
+.diaspora-section{background:linear-gradient(135deg,#0f1a35,#1e3a8a);color:#fff;border-radius:var(--radius);padding:1rem;margin:.75rem 0}
+.diaspora-title{font-weight:800;font-size:.82rem;color:#93c5fd;margin-bottom:.6rem}
+.diaspora-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem}
+@media(min-width:400px){.diaspora-grid{grid-template-columns:repeat(3,1fr)}}
+.diaspora-method{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:.5rem;padding:.5rem .45rem;text-align:center;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .2s}
+.diaspora-method:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.dm-ico{font-size:1.25rem;display:block;margin-bottom:.2rem}.dm-name{opacity:.9}.dm-rate{font-size:.58rem;opacity:.65;margin-top:.1rem}
+
+/* COSODO MODAL */
+.token-section{background:linear-gradient(135deg,var(--deep),#0f5132);border-radius:var(--radius);padding:1rem;color:#fff;margin-bottom:.875rem}
+.token-title{font-weight:800;font-size:.88rem;margin-bottom:.5rem;color:var(--y)}
+.token-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem;margin-top:.5rem}
+.tg-item{background:rgba(255,255,255,.1);border-radius:.45rem;padding:.5rem;text-align:center}
+.tg-v{font-size:.94rem;font-weight:800;color:var(--y)}.tg-l{font-size:.6rem;opacity:.8;margin-top:.1rem}
+.cosodo-opts-list{display:grid;gap:.5rem;margin:.75rem 0}
+.cosodo-opt-card{border:2px solid var(--bdr);border-radius:var(--radius);padding:.875rem;cursor:pointer;transition:all .2s}
+.cosodo-opt-card:hover,.cosodo-opt-card.selected{border-color:var(--g);background:#f0fdf4;box-shadow:0 0 0 3px rgba(22,163,74,.1)}
+.coc-title{font-weight:800;margin-bottom:.2rem;font-size:.88rem}.coc-desc{font-size:.76rem;color:var(--light);line-height:1.5}
+.coc-pills{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.4rem}
+.coc-pill{font-size:.62rem;padding:.15rem .42rem;border-radius:1rem;font-weight:700;background:#e0f2fe;color:#075985}
+.coc-pill.green{background:#d1fae5;color:#065f46}.coc-pill.gold{background:#fef3c7;color:#92400e}
+.exit-opts{margin-top:.75rem;display:grid;gap:.35rem}
+.exit-opt{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:.6rem;padding:.6rem .75rem;cursor:pointer;transition:all .2s}
+.exit-opt.selected{background:rgba(234,179,8,.18);border-color:var(--y)}
+.exit-opt-t{font-size:.8rem;font-weight:800;color:var(--y)}.exit-opt-d{font-size:.7rem;opacity:.8;margin-top:.12rem;line-height:1.4}
+.token-calc{font-size:.72rem;color:var(--g);margin-top:.3rem;font-weight:700;padding:.25rem .5rem;background:#f0fdf4;border-radius:.35rem;border:1px solid #bbf7d0;display:none}
+
+/* FORMS */
+.fg{margin-bottom:.8rem}
+.flabel{display:block;font-weight:700;margin-bottom:.3rem;font-size:.82rem;color:var(--dark)}
+.finput,.fselect,.ftextarea{width:100%;padding:.65rem .85rem;border:2px solid var(--bdr);border-radius:.6rem;font-size:.92rem;transition:all .2s;background:#fff;font-family:var(--font);color:var(--dark)}
+.finput:focus,.fselect:focus,.ftextarea:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(22,163,74,.1)}
+.ftextarea{min-height:72px;resize:vertical}
+.fgrid2{display:grid;gap:.8rem}
+@media(min-width:520px){.fgrid2{grid-template-columns:repeat(2,1fr)}}
+.check-row{display:flex;align-items:center;gap:.55rem;cursor:pointer;padding:.5rem;border-radius:.5rem;transition:background .2s;user-select:none}
+.check-row:hover{background:#f9fafb}
+.check-in{width:1.1rem;height:1.1rem;cursor:pointer;accent-color:var(--g)}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;
+  align-items:center;justify-content:center;padding:.75rem;backdrop-filter:blur(6px)}
+.modal-bg.on{display:flex}
+.modal{background:#fff;border-radius:var(--radiusLG);max-width:660px;width:100%;
+  max-height:93vh;overflow-y:auto;box-shadow:var(--card-shXL);animation:modalIn .28s ease}
+@keyframes modalIn{from{transform:translateY(24px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.modal-hdr{padding:.875rem 1.1rem;border-bottom:1px solid var(--bdr);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;border-radius:var(--radiusLG) var(--radiusLG) 0 0}
+.modal-title{font-size:1rem;font-weight:800;color:var(--dark)}
+.modal-body{padding:1.1rem}
+
+/* MISC */
+.legend-bar{background:#fff;border-radius:var(--radius);padding:.75rem 1rem;margin-bottom:.875rem;box-shadow:var(--card-sh)}
+.legend-items{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.3rem}
+.fab{position:fixed;bottom:1.25rem;right:1.25rem;width:3.4rem;height:3.4rem;border-radius:50%;
+  background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;border:none;
+  box-shadow:0 4px 20px rgba(22,163,74,.5);cursor:pointer;display:none;align-items:center;
+  justify-content:center;font-size:1.4rem;z-index:90;transition:all .3s;font-family:var(--font)}
+.fab:hover{transform:scale(1.1) rotate(90deg)!important;box-shadow:0 8px 28px rgba(22,163,74,.6)}
+.help-fab{position:fixed;bottom:5.75rem;right:1.25rem;width:3rem;height:3rem;border-radius:50%;
+  background:linear-gradient(135deg,var(--y),var(--yd));color:#1a1a1a;border:none;
+  box-shadow:0 4px 16px rgba(234,179,8,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;z-index:90;transition:transform .2s}
+.help-fab:hover{transform:scale(1.1)}
+.scroll-up{position:fixed;bottom:9.5rem;right:1.25rem;width:2.6rem;height:2.6rem;border-radius:50%;
+  background:#fff;color:var(--g);border:2px solid var(--g);display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--card-shL);z-index:89;font-size:.875rem;transition:transform .2s;font-family:var(--font)}
+.scroll-up.show{display:flex}.scroll-up:hover{transform:scale(1.1)}
+.toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:var(--dark);
+  color:#fff;padding:.875rem 1.5rem;border-radius:.875rem;box-shadow:var(--card-shXL);z-index:2000;
+  display:none;max-width:90%;text-align:center;font-size:.85rem;font-weight:700;border:1px solid rgba(255,255,255,.1)}
+.toast.on{display:block;animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.save-chip{position:fixed;top:4.8rem;right:.75rem;background:var(--ok);color:#fff;padding:.3rem .7rem;border-radius:.45rem;font-size:.72rem;z-index:500;display:none;font-weight:700;box-shadow:0 2px 10px rgba(16,185,129,.4)}
+.save-chip.on{display:block}
+.onboard{background:linear-gradient(135deg,#fffbeb,#fef9ee);border:2px solid var(--y);border-radius:var(--radiusLG);padding:1rem;margin-bottom:1rem;display:flex;align-items:start;gap:.875rem}
+.onboard-ico{font-size:2.5rem;flex-shrink:0;margin-top:.1rem}
+.onboard-text h3{font-size:.94rem;font-weight:800;color:#92400e;margin-bottom:.2rem}
+.onboard-text p{font-size:.78rem;color:#78350f;line-height:1.55}
+.onboard-close{background:none;border:none;cursor:pointer;font-size:1.2rem;padding:.2rem;flex-shrink:0;opacity:.55;transition:opacity .2s;margin-left:auto;align-self:start}
+.onboard-close:hover{opacity:1}
+.receipt{border:2px solid var(--g);border-radius:var(--radius);padding:1.25rem;font-family:'Courier New',monospace;background:#fafff8;font-size:.8rem;line-height:2}
+.upload-progress{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:.5rem;padding:.5rem .75rem;font-size:.75rem;color:#065f46;font-weight:700;display:none;align-items:center;gap:.5rem;margin-top:.35rem}
+.upload-progress.on{display:flex}
+
+@media(max-width:380px){
+  .qstats{grid-template-columns:repeat(2,1fr)}
+  .hero-title{font-size:1.6rem}
+  .hdr-actions .btn-label{display:none}
+}
+@media(min-width:1024px){
+  .hero-content{padding:2.5rem 3rem 3rem}
+  .wrap{padding:1rem 1.25rem}
+}
+@media print{
+  .hdr,.nav,.fab,.help-fab,.scroll-up,.toast,.save-chip,.hdr-actions{display:none!important}
+  .modal-bg{position:static!important;background:none!important;padding:0}
+  .modal{max-height:none!important;box-shadow:none!important;border:2px solid #000!important}
+  body{background:#fff}
+}
+</style>
+
+<!--AUTO GENERATED BY CODVERTER.COM-->
+<script src="scripts.js"></script>
+<link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="logo" onclick="goHome()">
+      <div class="logo-emblem">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Fourmi Magnant">
+          <ellipse cx="24" cy="34" rx="9" ry="11" fill="#8B4513" stroke="#5D2E0C" stroke-width="1"/>
+          <ellipse cx="24" cy="34" rx="7" ry="9" fill="#A0522D"/>
+          <ellipse cx="24" cy="22" rx="6" ry="6" fill="#8B4513" stroke="#5D2E0C" stroke-width="1"/>
+          <ellipse cx="24" cy="22" rx="5" ry="5" fill="#A0522D"/>
+          <ellipse cx="24" cy="12" rx="5.5" ry="5" fill="#6B3410" stroke="#5D2E0C" stroke-width="1"/>
+          <ellipse cx="24" cy="12" rx="4.5" ry="4" fill="#8B4513"/>
+          <circle cx="21.5" cy="11" r="1.2" fill="#FFD700"/><circle cx="26.5" cy="11" r="1.2" fill="#FFD700"/>
+          <circle cx="21.8" cy="11.1" r=".55" fill="#1a1a1a"/><circle cx="26.8" cy="11.1" r=".55" fill="#1a1a1a"/>
+          <path d="M22 8.5 C20 5 16 3 13 4" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M26 8.5 C28 5 32 3 35 4" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="13" cy="4" r="1.2" fill="#FFD700"/><circle cx="35" cy="4" r="1.2" fill="#FFD700"/>
+          <path d="M19 20 C14 17 10 16 7 18" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M18 23 C13 22 9 23 6 25" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M19 27 C14 26 11 28 8 31" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M29 20 C34 17 38 16 41 18" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M30 23 C35 22 39 23 42 25" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M29 27 C34 26 37 28 40 31" stroke="#5D2E0C" stroke-width="1.5" stroke-linecap="round"/>
+          <ellipse cx="24" cy="28" rx="2.5" ry="3" fill="#6B3410" stroke="#5D2E0C" stroke-width=".8"/>
+          <ellipse cx="22" cy="30" rx="3" ry="4" fill="rgba(255,255,255,.12)"/>
+        </svg>
+      </div>
+      <div class="logo-txt">
+        <h1>Plateforme Mewahou</h1>
+        <p>Fourmis Magnants · Batchingou · Ndé · Ouest Cameroun</p>
+      </div>
+    </div>
+    <div class="hdr-actions">
+      <button class="btn btn-w" onclick="exportData()" title="Exporter">📥 <span class="btn-label">Export</span></button>
+      <label class="btn btn-w" style="cursor:pointer" title="Importer">📤 <span class="btn-label">Import</span><input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+      <button class="btn btn-ic" id="adminToggle" onclick="showMasterPwd()" style="background:rgba(254,226,226,.9);color:#991b1b" title="Admin">🔒</button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="nav-tab on" data-view="home" onclick="switchView('home',this)"><span class="ntab-ico">🏠</span><span class="ntab-lbl">Accueil</span></button>
+    <button class="nav-tab" data-view="projects" onclick="switchView('projects',this)"><span class="ntab-ico">📋</span><span class="ntab-lbl">Projets</span><span class="nav-badge" id="projCountBadge">0</span></button>
+    <button class="nav-tab" data-view="dashboard" onclick="switchView('dashboard',this)"><span class="ntab-ico">📊</span><span class="ntab-lbl">Tableau</span></button>
+    <button class="nav-tab" data-view="contributors" onclick="switchView('contributors',this)"><span class="ntab-ico">🏆</span><span class="ntab-lbl">Membres</span></button>
+    <button class="nav-tab" data-view="faq" onclick="switchView('faq',this)"><span class="ntab-ico">❓</span><span class="ntab-lbl">FAQ</span></button>
+    <button class="nav-tab" data-view="actualites" onclick="switchView('actualites',this)"><span class="ntab-ico">📰</span><span class="ntab-lbl">Actus</span></button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <!-- QUICK STATS -->
+  <div class="qstats">
+    <div class="qs"><div class="qs-v" id="qs-proj">0</div><div class="qs-l">Projets</div></div>
+    <div class="qs"><div class="qs-v" id="qs-contrib">0</div><div class="qs-l">Contributions</div></div>
+    <div class="qs"><div class="qs-v" id="qs-amt">0</div><div class="qs-l">XAF collectés</div></div>
+    <div class="qs"><div class="qs-v" id="qs-members">0</div><div class="qs-l">Contributeurs</div></div>
+    <div class="qs"><div class="qs-v" id="qs-pend">0</div><div class="qs-l">En attente</div></div>
+  </div>
+  <div class="status-ribbon">
+    <div class="sync-pill sync-on" id="syncPill"><span class="sync-dot"></span><span id="syncTxt">En ligne</span></div>
+    <div style="font-size:.72rem;color:var(--light)" id="lastSaveTime"></div>
+  </div>
+
+  <!-- ══ HOME VIEW ══ -->
+  <div id="homeView">
+    <!-- CHANTIER ACTIF BANNER -->
+    <div class="chantier-banner">
+      <div class="cb-dot"></div>
+      <div class="cb-txt">
+        <strong>🐜 Fourmilière active — Chantier NDIAHA en marche !</strong>
+        <small>Coup de pioche officiel : 1ᵉʳ Avril 2026 · Sciage en cours · Portes installées · 526 000 F CFA mobilisés · Livraison : Festival Batchingou Oct. 2026</small>
+      </div>
+      <button class="btn btn-w" style="flex-shrink:0;font-size:.72rem;padding:.38rem .7rem" onclick="switchView('projects',document.querySelector('[data-view=projects]'))">Voir →</button>
+    </div>
+
+    <section class="hero">
+      <div class="hero-bg hero-bg-default" id="heroBg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-particles">
+        <span class="ant">🐜</span><span class="ant">🐜</span><span class="ant">🐜</span>
+        <span class="ant">🐜</span><span class="ant">🐜</span><span class="ant">🐜</span>
+      </div>
+      <div class="hero-content">
+        <div class="hero-live-badge"><span class="live-dot"></span>🐜 Fourmis Magnants NDIAHA · Campagne 2026 · Chantier actif</div>
+        <h2 class="hero-title">Bâtissons ensemble<br>la <span>Vitrine de Batchingou</span></h2>
+        <p class="hero-sub">Au pied du majestueux <strong>Mont Ndoubock</strong>, comme les fourmis Magnants qui construisent de grandioses ouvrages par leur discipline collective — rejoignez la grande famille Batchingou ! Chaque contribution entre dans l'histoire.</p>
+        <blockquote class="hero-quote">"Dans la tradition Bamiléké des Grassfields, la fourmi Magnant — Ndiaha — porte vingt fois son poids, ne recule jamais et sait une seule chose : la fourmilière arrive toujours à destination, si chacun fait sa part."</blockquote>
+        <div class="hero-btns">
+          <button class="btn btn-gradient btn-lg" onclick="showCosodoContrib('cosodo','')">🌾 Rejoindre COSODO-CA</button>
+          <button class="btn btn-ghost btn-lg" onclick="showContrib('esplanade')">🏟️ Contribuer NDIAHA</button>
+          <button class="btn btn-ghost btn-lg" onclick="switchView('contributors',document.querySelector('[data-view=contributors]'))">🏆 Hall d'honneur</button>
+        </div>
+        <div class="ticker-wrap">
+          <span class="ticker-tag">📢 INFO</span>
+          <div class="ticker-track">
+            <span class="ticker-content" id="tickerContent">
+              🏟️ Op. Fourmis NDIAHA · Budget : 29 662 365 FCFA · Blocs A→E · Coup de pioche : 1ᵉʳ Avr. 2026 · MTN : +237 681 849 852 · Orange : +237 699 425 436 · Compte CEFA AKWA — RIB 10005 00023 02988901001-44 · SWIFT : CCEICMCX
+              ●●●
+              🌾 COSODO-CA · Parts sociales : 50 000 XAF/part (min. 2 parts = 100 000 XAF) · MTN : +237 653 320 359 · Orange/WA : +237 699 558 178 · eco2africa@gmail.com
+              ●●●
+              🏰 Palais Royal · 1 521 250 FCFA collectés — Réhabilitation Cour Intérieure · Objectif : 20 000 000 FCFA
+              ●●●
+              🌾 DAMDJA Prosper installé Chef de Poste Agricole Batchingou (Village Bangwe, Mars 2026) · COSODO-CA au cœur des engagements
+              ●●●
+              🌦️ Saison pluvieuse 2026 · Démarrage prévu : 17-27 Mars · Préparez vos semences
+              ●●●
+              📖 Éco-tour Ngatchou 2026 · Encyclopédie Batchingou · Lancement Festival Novembre 2026 · Partenaires recherchés
+            </span>
+          </div>
+        </div>
+        <div class="hero-stats-row">
+          <div class="hstat"><div class="hstat-v" id="hs-proj">5</div><div class="hstat-l">Projets actifs</div></div>
+          <div class="hstat"><div class="hstat-v" id="hs-total">1.8M</div><div class="hstat-l">XAF collectés</div></div>
+          <div class="hstat"><div class="hstat-v" id="hs-contrib">5</div><div class="hstat-l">Contributeurs</div></div>
+          <div class="hstat"><div class="hstat-v">2026</div><div class="hstat-l">Lancement</div></div>
+        </div>
+      </div>
+      <label class="hero-upload-btn">🏔️ Photo Mont Ndoubock<input type="file" accept="image/*" onchange="setHeroBg(event)" style="display:none"></label>
+    </section>
+
+    <div class="onboard" id="onboardBanner">
+      <div class="onboard-ico">🐜</div>
+      <div class="onboard-text">
+        <h3>Bienvenue sur la Plateforme Mewahou v9.0 !</h3>
+        <p>Découvrez nos projets, contribuez à l'essor de Batchingou et rejoignez la grande famille des Fourmis Magnants. Le chantier NDIAHA est déjà actif sur le terrain — chaque contribution compte.</p>
+      </div>
+      <button class="onboard-close" onclick="document.getElementById('onboardBanner').style.display='none'">✖</button>
+    </div>
+
+    <!-- CHRONOLOGIE MINI -->
+    <div class="chrono-strip">
+      <div class="sec-hdr" style="margin-bottom:.6rem"><div class="sec-title" style="font-size:.9rem"><span class="sec-title-line"></span>📜 Chronologie Opération NDIAHA</div></div>
+      <div class="chrono-steps">
+        <div class="cs-item"><div class="cs-dot done">✓</div><div class="cs-lbl">Présentation Royale</div><div class="cs-date">06 Fév. 2026</div></div>
+        <div class="cs-item"><div class="cs-dot done">✓</div><div class="cs-lbl">Mobilisation Communautés</div><div class="cs-date">07 Fév. 2026</div></div>
+        <div class="cs-item"><div class="cs-dot done">✓</div><div class="cs-lbl">Premières collectes</div><div class="cs-date">Fév. 2026</div></div>
+        <div class="cs-item"><div class="cs-dot done">✓</div><div class="cs-lbl">Liste Personnalités ouverte</div><div class="cs-date">01 Mars 2026</div></div>
+        <div class="cs-item"><div class="cs-dot active">🐜</div><div class="cs-lbl">Chantier préparatoire actif</div><div class="cs-date">Mars 2026</div></div>
+        <div class="cs-item"><div class="cs-dot future">🔨</div><div class="cs-lbl">Coup de pioche officiel</div><div class="cs-date">1ᵉʳ Avr. 2026</div></div>
+        <div class="cs-item"><div class="cs-dot future">🎉</div><div class="cs-lbl">Livraison Festival</div><div class="cs-date">Oct. 2026</div></div>
+      </div>
+    </div>
+
+    <div class="qa-grid">
+      <div class="qa-card" onclick="showCosodoContrib('cosodo','')"><span class="qa-icon">🌾</span><span class="qa-label">COSODO-CA</span><span class="qa-sub">Rejoindre →</span></div>
+      <div class="qa-card" onclick="showContrib('esplanade')"><span class="qa-icon">🏟️</span><span class="qa-label">Op. NDIAHA</span><span class="qa-sub">Contribuer →</span></div>
+      <div class="qa-card" onclick="switchView('dashboard',document.querySelector('[data-view=dashboard]'))"><span class="qa-icon">📊</span><span class="qa-label">Tableau de bord</span><span class="qa-sub">Consulter →</span></div>
+      <div class="qa-card" onclick="switchView('contributors',document.querySelector('[data-view=contributors]'))"><span class="qa-icon">🏆</span><span class="qa-label">Hall d'honneur</span><span class="qa-sub">Découvrir →</span></div>
+    </div>
+
+    <div class="carousel-outer">
+      <div class="sec-hdr">
+        <div class="sec-title"><span class="sec-title-line"></span>🎯 Nos Projets Phares</div>
+        <button class="btn btn-g" onclick="switchView('projects',document.querySelector('[data-view=projects]'))">Voir tout →</button>
+      </div>
+      <div class="carousel" id="carousel"></div>
+    </div>
+
+    <div class="about-card">
+      <h2 style="font-size:1.2rem;font-weight:800;margin-bottom:.875rem;display:flex;align-items:center;gap:.5rem">🏔️ Groupement Batchingou — Paysage Ndoubock</h2>
+      <p style="font-size:.85rem;opacity:.93;line-height:1.75;margin-bottom:.875rem">Situé sur les hauts plateaux de l'Ouest Cameroun, au pied du majestueux <strong>Mont Ndoubock</strong>, le Groupement Batchingou porte une riche histoire culturelle et patrimoniale Bamiléké. La plateforme <strong>Mewahou</strong> mobilise la diaspora et les fils et filles du terroir pour co-financer les projets qui feront rayonner notre communauté.</p>
+      <p style="font-style:italic;opacity:.88;border-left:3px solid rgba(234,179,8,.6);padding-left:.875rem;font-size:.82rem;line-height:1.75">L'Opération Fourmis Magnants est un acte de réconciliation du Peuple Batchingou avec ses valeurs ancestrales de solidarité et d'action collective. La puissance ne réside pas dans la taille de chaque contribution, mais dans la convergence de toutes.</p>
+      <div class="about-stats-row">
+        <div class="astat"><div class="astat-v" id="ab-proj">5</div><div class="astat-l">Projets actifs</div></div>
+        <div class="astat"><div class="astat-v">🌍</div><div class="astat-l">Diaspora & Terroir</div></div>
+        <div class="astat"><div class="astat-v">2026</div><div class="astat-l">Lancement officiel</div></div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:var(--radiusLG);padding:1.25rem;box-shadow:var(--card-sh);margin-bottom:1.5rem">
+      <div class="sec-hdr"><div class="sec-title"><span class="sec-title-line"></span>💝 Dernières Contributions</div></div>
+      <div id="homeRecentContribs"><p style="color:var(--light);font-size:.875rem">Aucune contribution validée pour le moment.</p></div>
+    </div>
+  </div>
+
+  <!-- ══ PROJECTS VIEW ══ -->
+  <div id="projectsView" style="display:none">
+    <div class="legend-bar">
+      <div style="font-size:.8rem;font-weight:800;margin-bottom:.3rem">Légende</div>
+      <div class="legend-items">
+        <span class="cat-badge cat-agri">🌾 Agri-Élevage</span><span class="cat-badge cat-infra">🏗️ Infrastructure</span>
+        <span class="cat-badge cat-culture">🎭 Culture</span><span class="cat-badge cat-amenag">🌳 Aménagement</span>
+        <span class="cat-badge cat-numerique">💻 Numérique</span>
+        <span class="prio-badge prio-urgent">🔴 URGENT</span><span class="prio-badge prio-high">🟠 Haute</span><span class="prio-badge prio-medium">🔵 Moyenne</span>
+      </div>
+    </div>
+    <div class="search-wrap"><span class="search-ico">🔍</span><input type="search" class="search-in" id="searchInput" placeholder="Rechercher un projet, une localité…" oninput="renderProjects()"></div>
+    <div class="filter-scroll">
+      <button class="fbtn on" onclick="setCatFilter('all',this)">Tous</button>
+      <button class="fbtn" onclick="setCatFilter('agri',this)">🌾 Agri-Élevage</button>
+      <button class="fbtn" onclick="setCatFilter('infrastructure',this)">🏗️ Infrastructure</button>
+      <button class="fbtn" onclick="setCatFilter('culture',this)">🎭 Culture</button>
+      <button class="fbtn" onclick="setCatFilter('amenagement',this)">🌳 Aménagement</button>
+      <button class="fbtn" onclick="setCatFilter('numerique',this)">💻 Numérique</button>
+    </div>
+    <div class="pgrid" id="projectsGrid"></div>
+  </div>
+
+  <!-- ══ DASHBOARD VIEW ══ -->
+  <div id="dashboardView" style="display:none">
+    <div style="background:#fff;border-radius:var(--radius);padding:1rem;margin-bottom:1rem;box-shadow:var(--card-sh)">
+      <div style="font-weight:800;margin-bottom:.45rem;font-size:.875rem">📊 Sélectionner un projet :</div>
+      <select class="fselect" id="dashProjSelectEl" onchange="onDashProjChange(this)"></select>
+    </div>
+    <div class="stats-grid" id="statsOverview"></div>
+    <div id="dashChart" style="display:none;background:#fff;border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--card-sh)">
+      <div class="sec-title" style="margin-bottom:.875rem;font-size:.9rem"><span class="sec-title-line"></span>📈 Historique des contributions</div>
+      <div class="mini-chart" id="miniChart"></div>
+      <div style="display:flex;justify-content:space-between;font-size:.62rem;color:var(--light);margin-top:.2rem" id="chartLabels"></div>
+    </div>
+    <div class="tier-row">
+      <button class="tbadge t-all on" onclick="filterContribs('all',this)">Tous</button>
+      <button class="tbadge t-bronze" onclick="filterContribs('bronze',this)">🥉 Bronze</button>
+      <button class="tbadge t-silver" onclick="filterContribs('silver',this)">🥈 Argent</button>
+      <button class="tbadge t-gold" onclick="filterContribs('gold',this)">🥇 Or</button>
+      <button class="tbadge t-platinum" onclick="filterContribs('platinum',this)">💎 Platine</button>
+      <button class="tbadge t-diamond" onclick="filterContribs('diamond',this)">💍 Diamant</button>
+    </div>
+    <div id="contribList"></div>
+  </div>
+
+  <!-- ══ CONTRIBUTORS VIEW ══ -->
+  <div id="contributorsView" style="display:none"><div id="hallContent"></div></div>
+
+  <!-- ══ FAQ VIEW ══ -->
+  <div id="faqView" style="display:none">
+    <div class="faq-hero">
+      <h2 style="font-size:1.2rem;font-weight:900;margin-bottom:.45rem">❓ FAQ & Guide d'utilisation</h2>
+      <p style="font-size:.82rem;opacity:.9;line-height:1.6">Tout ce que vous devez savoir sur la Plateforme Mewahou et les projets Batchingou.</p>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.875rem" id="faqCatBtns">
+        <button class="btn btn-w" onclick="filterFaq('all',this)">Toutes</button>
+        <button class="btn btn-ghost" onclick="filterFaq('cosodo',this)">🌾 COSODO-CA</button>
+        <button class="btn btn-ghost" onclick="filterFaq('contrib',this)">💝 Contributions</button>
+        <button class="btn btn-ghost" onclick="filterFaq('tech',this)">💻 Technique</button>
+        <button class="btn btn-ghost" onclick="filterFaq('gen',this)">ℹ️ Général</button>
+      </div>
+    </div>
+    <div id="faqList"></div>
+  </div>
+
+  <!-- ══ ACTUALITES VIEW ══ -->
+  <div id="actualitesView" style="display:none">
+    <div style="background:#fff;border-radius:var(--radiusLG);padding:1.25rem;box-shadow:var(--card-sh);margin-bottom:1rem">
+      <div class="sec-hdr">
+        <div class="sec-title"><span class="sec-title-line"></span>📰 Actualités & Annonces</div>
+        <div id="addActuBtn" style="display:none"><button class="btn btn-ok" onclick="showAddActu()">➕ Nouvelle</button></div>
+      </div>
+      <div id="actualitesList"></div>
+    </div>
+  </div>
+</main>
+
+<button class="help-fab" onclick="switchView('faq',document.querySelector('[data-view=faq]'))" title="FAQ">❓</button>
+<button class="fab" id="fab" onclick="showAddProject()">➕</button>
+<button class="scroll-up" id="scrollUp" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+<div class="toast" id="toast"></div>
+<div class="save-chip" id="saveChip">💾 Sauvegardé</div>
+<div id="modals"></div>
+
+<footer style="background:#0a1a0c;color:#fff;padding:1.5rem 1rem;text-align:center;margin-top:2rem;border-top:3px solid var(--g)">
+  <p style="font-size:.8rem;opacity:.85;font-weight:600">© 2026 Plateforme Mewahou v9.0 — Groupement Batchingou · Bangangté · Ndé · Ouest Cameroun</p>
+  <p style="font-size:.7rem;opacity:.45;margin-top:.3rem">Développé avec ❤️ pour la Communauté Batchingou · Mont Ndoubock · Fourmis Magnants NDIAHA</p>
+</footer>
+
+<script>
+const VERSION='9.0';
+const RATES={USD:620,EUR:680,CAD:460,GBP:790,XAF:1};
+const TIERS={
+  bronze:{min:0,max:50000,label:'Bronze',icon:'🥉',color:'#d97706'},
+  silver:{min:50001,max:200000,label:'Argent',icon:'🥈',color:'#9ca3af'},
+  gold:{min:200001,max:500000,label:'Or',icon:'🥇',color:'#eab308'},
+  platinum:{min:500001,max:1000000,label:'Platine',icon:'💎',color:'#60a5fa'},
+  diamond:{min:1000001,max:Infinity,label:'Diamant',icon:'💍',color:'#a855f7'}
+};
+const CAT_META={agri:{label:'🌾 Agri-Élevage',cls:'cat-agri'},infrastructure:{label:'🏗️ Infrastructure',cls:'cat-infra'},culture:{label:'🎭 Culture & Patrimoine',cls:'cat-culture'},amenagement:{label:'🌳 Aménagement',cls:'cat-amenag'},numerique:{label:'💻 Numérique',cls:'cat-numerique'}};
+const PRIO_META={urgent:{label:'🔴 URGENT',cls:'prio-urgent'},high:{label:'🟠 Haute',cls:'prio-high'},medium:{label:'🔵 Moyenne',cls:'prio-medium'},normal:{label:'Planifié',cls:'prio-normal'}};
+const GRADS=['linear-gradient(135deg,#15803d,#d97706)','linear-gradient(135deg,#1d4ed8,#7c3aed)','linear-gradient(135deg,#b45309,#dc2626)','linear-gradient(135deg,#0891b2,#16a34a)','linear-gradient(135deg,#7c3aed,#ec4899)'];
+
+function hashPwd(p){let h1=5381,h2=52711;for(let i=0;i<p.length;i++){const c=p.charCodeAt(i);h1=Math.imul((h1<<5)+h1,1)^c;h2=Math.imul((h2<<5)+h2,1)^(c*1103515245+12345&0xffffffff);}const s=((h1>>>0).toString(16).padStart(8,'0')+(h2>>>0).toString(16).padStart(8,'0'));let r='';for(let i=0;i<4;i++){let x=parseInt(s.slice(i*2,i*2+4),16)^(i*0xa3f1);r+=x.toString(16).padStart(4,'0');}return(s+r+s).slice(0,64);}
+const PWD_HASH=(()=>{const pw={master:'Mew@h0u#Batch!2026$Ndoub0ck',cosodo:'C0S0D0-Agri!2026@Paysage',esplanade:'Espl@nade!Batch2026#Ndiaha',palais:'P@lais-R0yal!Batch2026#Roi',ecotour:'Ec0T0ur#Ngatch0u!2026@Bat',musee:'Mus3e-Batch!2027$Patrim0ine'};const h={};for(const[k,v]of Object.entries(pw))h[k]=hashPwd(v);return h;})();
+function checkPwd(i,k){return hashPwd(i)===PWD_HASH[k];}
+
+const FAQ_DATA=[
+  {id:'f1',q:"Qu'est-ce que la plateforme Mewahou ?",a:"Mewahou est la plateforme numérique officielle de co-financement participatif du Groupement Batchingou. Elle permet à toute personne — diaspora ou terroir — de contribuer aux projets de développement communautaire de Batchingou (Ndé, Ouest Cameroun). L'Opération Fourmis Magnants NDIAHA en est le fer de lance.",cat:'gen'},
+  {id:'f2',q:"Qu'est-ce que COSODO-CA ?",a:"COSODO-CA (Coopérative Solidaire du Paysage Ndoubock) est une coopérative agricole multi-filières : agriculture durable, élevage, pisciculture, transformation artisanale, commercialisation et microfinance. Elle a été au cœur de la cérémonie d'installation du nouveau Chef de Poste Agricole DAMDJA Prosper en mars 2026.",cat:'cosodo'},
+  {id:'f3',q:"Comment acquérir des parts sociales COSODO-CA ?",a:"Minimum 2 parts à 50 000 XAF/part = 100 000 XAF. MTN MoMo : +237 653 320 359 · Orange/WA : +237 699 558 178 · eco2africa@gmail.com. Un contrat OHADA vous sera fourni.",cat:'cosodo'},
+  {id:'f4',q:"En quoi consiste l'Opération Fourmis NDIAHA ?",a:"Aménagement de l'Esplanade de la Chefferie Supérieure : 5 blocs de tribunes fixes (A→E) — Bloc A Boutique/Multi-usage (2 294 600 F), Bloc B Multi-usage (6 589 020 F), Bloc C Tribune fixe (7 415 370 F), Bloc D Espace VIP (8 769 125 F), Bloc E Espace Annonce (4 594 250 F) — plus la Place des Cérémonies. Budget total : 29 662 365 FCFA. Travaux : Avr.→Oct. 2026. Maître d'œuvre : KENNE TATA CONSTRUCTION. Coup de pioche : 1ᵉʳ Avril 2026.",cat:'gen'},
+  {id:'f5',q:"Coordonnées bancaires officielles pour l'Esplanade ?",a:"Titulaire : CONSTRUCTION TCHEUK BATCHINGOU. Établissement : CEFA S.A — Agence Douala AKWA (domiciliée Afriland First Bank). Code Banque : 10005. Code Guichet : 00023. N° Compte : 02988901001. Clé RIB : 44. RIB complet : 10005 00023 02988901001-44. SWIFT : CCEICMCX. MTN : +237 681 849 852. Orange : +237 699 425 436. Attestation bancaire officielle délivrée le 05/03/2026.",cat:'contrib'},
+  {id:'f6',q:"Qui ont été les premiers contributeurs de l'Esplanade ?",a:"Liste ouverte le 01/03/2026 — Opération Fourmis NDIAHA. Contributions initiales enregistrées : MBEU WEMBA KEMADJOU Mathieu, coordonnateur général (200 000 F CFA) · MEKWA FIEU POUSSEU JEANNE D'ARC (40 000 F CFA). Collecte 1ère assise Douala : 172 000 F CFA. Collecte cérémonie vœux au Roi : 74 000 F CFA. Sénateur NANA Charles : 1 carton de peinture. Total initial constaté : 486 000 F CFA.",cat:'contrib'},
+  {id:'f7',q:"Qui est le nouveau Chef de Poste Agricole de Batchingou ?",a:"M. DAMDJA Prosper, Ingénieur des Travaux d'Agriculture (ITA), a été officiellement installé au Village Bangwe (Batchingou) en mars 2026, en présence du DAADER M. TAYO André, de Sa Majesté le Chef Supérieur Batchingou Nana André Flobert, de l'Adjointe au Maire, de 15+ Chefs de Poste, et de plus de 100 participants. La COSODO-CA était au cœur de tous les discours lors de cette cérémonie.",cat:'gen'},
+  {id:'f8',q:"Quelle est la prévision de la saison des pluies 2026 ?",a:"Direction de la Météorologie Nationale (03/03/2026) : démarrage prévu entre le 17 et le 27 mars 2026 pour la majorité de la Région de l'Ouest. Conseil : ne pas semer dès les premières averses et attendre la confirmation des dates officielles. Vérifiez la solidité de vos toitures avant les pluies.",cat:'gen'},
+  {id:'f9',q:"Qui sont les Parrains Royaux du projet NDIAHA ?",a:"Parrain Royal Suprême : S.M. NANA ANDRÉ FLOBERT, Roi Batchingou. Président Conseil Supérieur : Pr MBEUH NGONTHE Robert. Président CODIGBA : WEMBA SANGANG Georges. Patriarche d'Honneur : TAFFIEU MBEUGOK Dr Luc MEILO. Le projet est porté par le Conseil des Notables sous autorité et bénédiction royale.",cat:'gen'},
+  {id:'f10',q:"Comment puis-je contribuer à un projet ?",a:"1. Allez sur 'Projets'. 2. Choisissez le projet. 3. Cliquez 'Participer'. 4. Effectuez votre versement sur les coordonnées affichées. 5. Remplissez le formulaire de contribution. 6. Validation par le responsable avec délivrance d'un reçu.",cat:'contrib'},
+  {id:'f11',q:"Quels modes de paiement acceptez-vous ?",a:"✅ MTN Mobile Money · ✅ Orange Money · ✅ Virement bancaire (RIB/SWIFT) · ✅ Wise · ✅ WorldRemit · ✅ Western Union · ✅ MoneyGram · ✅ Remitly · ✅ Wave · ✅ PaySend · ✅ Ria Money. Toutes les formes de contribution comptent : financière, en nature, expertise, prestation de service, parrainage.",cat:'contrib'},
+  {id:'f12',q:"Comment exporter / importer les données ?",a:"Bouton 📥 (export JSON) et 📤 (import JSON) dans l'en-tête. Recommandé après chaque session importante pour conserver vos données.",cat:'tech'},
+  {id:'f13',q:"La plateforme fonctionne-t-elle hors ligne ?",a:"Oui ! Toutes les données sont sauvegardées localement dans le navigateur. Pour la persistance cloud, exportez régulièrement vos données JSON.",cat:'tech'},
+  {id:'f14',q:"Quels sont les niveaux de contribution ?",a:"🥉 Bronze : 0–50 000 XAF · 🥈 Argent : 50 001–200 000 XAF · 🥇 Or : 200 001–500 000 XAF · 💎 Platine : 500 001–1 000 000 XAF · 💍 Diamant : +1 000 000 XAF. Chaque niveau donne accès au Hall de la Reconnaissance.",cat:'contrib'},
+  {id:'f15',q:"Qui est le Coordonnateur Général de l'Opération NDIAHA ?",a:"MBEUH WEMBA KEMADJOU MATTHIEU, Président du Conseil des Notables, assure le pilotage stratégique et la supervision globale. Il est le premier contributeur financier du projet (200 000 F CFA). Équipe : Gestionnaire financier TAFIEU MBEUGOG TCHAKOUNTE Jean · Commissaire aux comptes WEMBA SAHAKENGNIEU NGONGANG A. · Contrôleur QSE Ing. KEPGANG Yannick · Maître d'œuvre KENNE TATA CONSTRUCTION · Assist. Tech. MBEUH LA'H Jean Claude STONE NJOMKAP.",cat:'gen'}
+];
+
+let projects=[],contribs=[],actualites=[],isAdmin=false,curView='home';
+let selProj=null,tierFilter='all',catFilter_='all',isOnline=navigator.onLine,heroBgUrl='';
+
+/* MEDIA */
+const MEDIA_STORE_KEY='bat_media_v90';
+let mediaStore={};
+function loadMediaStore(){try{const s=localStorage.getItem(MEDIA_STORE_KEY);mediaStore=s?JSON.parse(s):{};}catch(e){mediaStore={};}}
+function saveMediaStore(){try{localStorage.setItem(MEDIA_STORE_KEY,JSON.stringify(mediaStore));}catch(e){}}
+function getMedia(pid){return mediaStore[pid]||null;}
+function setMedia(pid,data){mediaStore[pid]=data;saveMediaStore();}
+function removeMedia(pid){delete mediaStore[pid];saveMediaStore();}
+function getProjectMedia(p){
+  const stored=getMedia(p.id);
+  if(stored)return stored;
+  if(p.imgUrl)return{type:'image',src:p.imgUrl};
+  if(p.img)return{type:'image',src:p.img};
+  return null;
+}
+
+function defaultProjects(){return[
+  {id:'cosodo',pwdKey:'cosodo',
+   name:'COSODO-CA — Coopérative Agricole Solidaire du Paysage Ndoubock',shortName:'COSODO-CA',
+   desc:'Coopérative communautaire multi-filières (agriculture durable, élevage, pisciculture, transformation, commercialisation, microfinance) pour l\'autonomisation économique de Batchingou. Honorée lors de l\'installation du Chef de Poste Agricole DAMDJA Prosper au Village Bangwe (Mars 2026) en présence du DAADER TAYO André, du Roi Batchingou et de 100+ participants.',
+   cat:'agri',priority:'urgent',target:5700000,collected:0,start:'2026-04-01',end:'2027-03-31',
+   loc:'Batchingou — Paysage Ndoubock',status:'active',
+   contacts:{mtn:'+237 653 320 359',orange:'+237 699 558 178',bank:'À confirmer',bankName:'Afriland First Bank (prévu)',accountName:'COSODO — Fonds Immatriculation'},
+   responsible:'JCSN — Comité d\'Initiative',email:'eco2africa@gmail.com',
+   icon:'🌾',img:'',imgUrl:'',created:new Date().toISOString(),isCosodo:true,
+   tokenPrice:100000,tokenUnit:'XAF',returnRate:5,
+   cosodo_options:[
+     {id:'parts',icon:'📜',title:'Parts sociales',fullTitle:'Acquérir des parts sociales',desc:'2 parts minimum · 50 000 XAF/part = 100 000 XAF · Statuts OHADA · Contrat délivré',returnType:'profit',exitMonths:24},
+     {id:'prefinancement',icon:'🌱',title:'Préfinancement 2026',fullTitle:'Préfinancement solidaire campagne 2026',desc:'Financement intrants, semences, équipements — démarrage immédiat saison pluvieuse Mars 2026',returnType:'harvest',exitMonths:12},
+     {id:'preachat',icon:'🛒',title:'Pré-achats',fullTitle:'Pré-achats solidaires',desc:'Acheter à l\'avance des produits agricoles à prix équitable',returnType:'goods',exitMonths:9},
+     {id:'parrainage',icon:'🤝',title:'Parrainer',fullTitle:'Parrainer un(e) producteur/productrice',desc:'Prendre en charge les parts d\'un(e) paysan(ne) local(e)',returnType:'social',exitMonths:0},
+     {id:'caution',icon:'🏦',title:'Caution mutuelle',fullTitle:'Préfinancement caution mutuelle',desc:'Contribuer au capital-garantie bancaire (5M XAF requis)',returnType:'interest',exitMonths:18}
+   ]},
+  /* ══ ESPLANADE — données complètes v9 ══ */
+  {id:'esplanade',pwdKey:'esplanade',
+   name:'Opération Fourmis Magnants NDIAHA — Tribunes Royales de l\'Esplanade de la Chefferie Supérieure',
+   shortName:'Esplanade NDIAHA',
+   desc:'Construction de 5 blocs de tribunes fixes (A→E) + Place des Cérémonies + sanitaires + espaces verts + parkings + aires ludiques. Chantier préparatoire déjà actif (sciage, portes installées). Coup de pioche officiel : 1ᵉʳ Avr. 2026. Livraison : Festival Batchingou Oct. 2026. Maître d\'œuvre : KENNE TATA CONSTRUCTION. Gouvernance : Coordonnateur MBEU WEMBA KEMADJOU · Commissaire aux comptes NGONGANG A. · Contrôle QSE Ing. KEPGANG Yannick.',
+   cat:'infrastructure',priority:'urgent',target:29662365,collected:526000,start:'2026-04-01',end:'2026-10-31',
+   loc:'Esplanade Chefferie Supérieure Batchingou — Ndé',status:'active',
+   contacts:{
+     mtn:'+237 681 849 852',
+     orange:'+237 699 425 436',
+     bank:'02988901001 — Clé RIB : 44',
+     bankName:'CEFA S.A — Agence Douala AKWA (Afriland First Bank)',
+     accountName:'CONSTRUCTION TCHEUK BATCHINGOU',
+     swift:'CCEICMCX',
+     rib:'10005 00023 02988901001-44',
+     codebanque:'10005',
+     codeguichet:'00023'
+   },
+   responsible:'KEMADJOU MATTHIEU (MBEUH WEMBA) — Coordonnateur Général & Président Conseil des Notables',
+   email:'eco2africa@gmail.com',
+   icon:'🏟️',img:'',imgUrl:'',created:new Date().toISOString(),
+   isEsplanade:true,
+   chantierActif:true,
+   chantierDetails:[
+     {ico:'🚪',txt:'2 portes fabriquées et installées sur le 2ème dôme traditionnel d\'entrée (aménagé en magasin de stockage)'},
+     {ico:'🪵',txt:'Sciage actif — près d\'une centaine de planches et lattes découpées et stockées'},
+     {ico:'📐',txt:'Études techniques finalisées — plans, chiffrages et approvisionnements validés'},
+     {ico:'🐜',txt:'Mobilisation populaire lancée — la fourmilière est en marche'}
+   ],
+   blocs:[
+     {id:'A',label:'Bloc A',desc:'Boutique / Multi-usage',surface:'~120 m²',budget:2294600},
+     {id:'B',label:'Bloc B',desc:'Espace Multi-usage',surface:'113,57 m²',budget:6589020},
+     {id:'C',label:'Bloc C',desc:'Tribune Fixe',surface:'~150 m²',budget:7415370},
+     {id:'D',label:'Bloc D',desc:'Espace VIP',surface:'129,82 m²',budget:8769125},
+     {id:'E',label:'Bloc E',desc:'Espace Annonce',surface:'102,82 m²',budget:4594250}
+   ],
+   gouvernance:{
+     parrain:'S.M. NANA ANDRÉ FLOBERT — Roi Batchingou (Parrain Royal Suprême)',
+     conseilSuperieur:'Pr MBEUH NGONTHE Robert — Président Conseil Supérieur',
+     codigba:'WEMBA SANGANG Georges — Président CODIGBA',
+     patriarche:'TAFFIEU MBEUGOK Dr Luc MEILO — Patriarche d\'Honneur',
+     coordo:'KEMADJOU MATTHIEU (MBEUH WEMBA) — Coordonnateur Général',
+     gestionnaire:'TAFIEU MBEUGOG TCHAKOUNTE Jean — Gestionnaire de compte',
+     commissaire:'WEMBA SAHAKENGNIEU NGONGANG A. — Commissaire aux comptes',
+     controleTech:'Ing. KEPGANG Yannick — Contrôleur QSE',
+     eau:'NANSI Cabrel — Ingénieur Eau & Réseaux',
+     maitreOeuvre:'KENNE TATA CONSTRUCTION — Maître d\'œuvre',
+     logistique:'TA\'A DJANGA — Magasinier / Logistique',
+     ravitaillement:'NDINGUE VICKO DIAVALO Clovis — Ravitaillement général',
+     comDiaspora:'MEFOUOGAP NGANSO Sylvie — Communication Diaspora',
+     comAssist:'MBEUH LA\'H Jean Claude STONE NJOMKAP — Assistance Technique & Appui Communication'
+   }
+  },
+  {id:'palais',pwdKey:'palais',name:'Réhabilitation du Palais Royal de Batchingou',shortName:'Palais Royal',
+   desc:'Réhabilitation et aménagement de la cour intérieure du Palais Royal — restauration et mise aux normes patrimoniales. Contributions validées lors de la cérémonie des vœux au Roi (07/02/2026) : MEPEGUEP SINKEP Anne & groupe d\'amies (300 000 F) · TAHFIEUH MBEUGONG Jean (1 000 000 F) · Collecte générale (221 250 F). Total : 1 521 250 FCFA.',
+   cat:'infrastructure',priority:'high',target:20000000,collected:1521250,start:'2026-02-07',end:'2027-06-30',
+   loc:'Palais Royal Batchingou',status:'active',
+   contacts:{mtn:'+237 677 693 420',orange:'+237 693 033 461',bank:'À définir',bankName:'À préciser',accountName:'Réhabilitation Palais Royal'},
+   responsible:'KEPNANG KOUANKAM EPSE NANA Marie Antoinette',email:'',icon:'🏰',img:'',imgUrl:'',created:new Date().toISOString()},
+  {id:'ecotour',pwdKey:'ecotour',name:'Encyclopédie Batchingou Éco-tour Ngatchou 2026',shortName:'Éco-tour Ngatchou',
+   desc:'Première encyclopédie culturelle & écotouristique de Batchingou (200 pages + application mobile). Lancement officiel au Festival Ngatchou Novembre 2026. Partenaires et contributeurs recherchés. Contacts : JCSN +237 699 558 178 / eco2africa@gmail.com.',
+   cat:'culture',priority:'high',target:4500000,collected:0,start:'2026-03-01',end:'2026-11-30',
+   loc:'Esplanade Chefferie Supérieure Batchingou',status:'active',
+   contacts:{mtn:'+237 653 320 359',orange:'+237 699 558 178',bank:'À communiquer',bankName:'Compte dédié',accountName:'Batchingou Éco-tour'},
+   responsible:'JCSN — Assistant Technique',email:'eco2africa@gmail.com',icon:'📖',img:'',imgUrl:'',created:new Date().toISOString()},
+  {id:'musee',pwdKey:'musee',name:'Musée du Patrimoine Batchingou',shortName:'Musée Patrimoine',
+   desc:'Espace muséal moderne pour préserver et valoriser notre patrimoine culturel, artisanal et historique Bamiléké. Un joyau patrimonial pour les générations futures.',
+   cat:'culture',priority:'medium',target:35000000,collected:0,start:'2027-01-01',end:'2028-12-31',
+   loc:'À déterminer — Batchingou',status:'planned',
+   contacts:{mtn:'À définir',orange:'À définir',bank:'À définir',bankName:'',accountName:''},
+   responsible:'À désigner',email:'',icon:'🏺',img:'',imgUrl:'',created:new Date().toISOString()}
+];}
+
+function defaultContribs(){return[
+  /* PALAIS ROYAL */
+  {id:'1001',projId:'palais',projName:'Palais Royal',name:'Mepeguep Sinkep Anne (Groupe d\'amies)',email:'',phone:'+237 677 693 420',addr:'Batchingou',amount:'300000',currency:'XAF',type:'monetary',natDesc:'Don collectif Groupe d\'amies',natVal:'',msg:'Cérémonie des vœux au Roi — 07/02/2026',anon:false,xaf:300000,tier:getTier(300000),validated:true,created:'2026-02-07T10:00:00.000Z'},
+  {id:'1002',projId:'palais',projName:'Palais Royal',name:'Collecte Cérémonie des Vœux',email:'',phone:'+237 677 693 420',addr:'Batchingou',amount:'221250',currency:'XAF',type:'monetary',natDesc:'',natVal:'',msg:'Collecte générale 07/02/2026',anon:false,xaf:221250,tier:getTier(221250),validated:true,created:'2026-02-07T14:00:00.000Z'},
+  {id:'1003',projId:'palais',projName:'Palais Royal',name:'Tahfieuh Mbeugong Tchakounte Jean',email:'',phone:'+237 693 033 461',addr:'Batchingou',amount:'1000000',currency:'XAF',type:'monetary',natDesc:'',natVal:'',msg:'Contribution personnelle — Réhabilitation Palais Royal',anon:false,xaf:1000000,tier:getTier(1000000),validated:true,created:'2026-02-07T15:00:00.000Z'},
+  /* ESPLANADE NDIAHA — situation consolidée au 07/03/2026 */
+  {id:'2001',projId:'esplanade',projName:'Esplanade NDIAHA',name:'Mbeu Wemba Kemadjou Matthieu',email:'',phone:'+237 681 849 852',addr:'Batchingou',amount:'200000',currency:'XAF',type:'monetary',natDesc:'Coordonnateur Général — Opération Fourmis NDIAHA · Liste ouverte 01/03/2026',natVal:'',msg:'Premier contributeur — Opération Fourmis Magnants NDIAHA',anon:false,xaf:200000,tier:getTier(200000),validated:true,created:'2026-03-01T09:00:00.000Z'},
+  {id:'2002',projId:'esplanade',projName:'Esplanade NDIAHA',name:'Mekwa Fieu Pousseu Jeanne d\'Arc',email:'',phone:'',addr:'Batchingou',amount:'40000',currency:'XAF',type:'monetary',natDesc:'Opération Fourmis NDIAHA · Liste ouverte 01/03/2026',natVal:'',msg:'Première contributrice — Opération Fourmis Magnants NDIAHA',anon:false,xaf:40000,tier:getTier(40000),validated:true,created:'2026-03-01T10:00:00.000Z'},
+  {id:'2003',projId:'esplanade',projName:'Esplanade NDIAHA',name:'Collecte — 1ère Assise Douala',email:'',phone:'',addr:'Douala',amount:'172000',currency:'XAF',type:'monetary',natDesc:'1ère assise de Douala — Collecte générale',natVal:'',msg:'',anon:false,xaf:172000,tier:getTier(172000),validated:true,created:'2026-02-15T10:00:00.000Z'},
+  {id:'2004',projId:'esplanade',projName:'Esplanade NDIAHA',name:'Collecte — Cérémonie des Vœux au Roi',email:'',phone:'',addr:'Batchingou',amount:'74000',currency:'XAF',type:'monetary',natDesc:'Cérémonie des vœux au Roi — Esplanade',natVal:'',msg:'',anon:false,xaf:74000,tier:getTier(74000),validated:true,created:'2026-02-07T11:00:00.000Z'},
+  {id:'2005',projId:'esplanade',projName:'Esplanade NDIAHA',name:'Sénateur Nana Charles',email:'',phone:'',addr:'Cameroun',amount:'0',currency:'XAF',type:'nature',natDesc:'Don en nature : 1 carton de peinture — contribution initiale symbolique',natVal:'15000',msg:'Première contribution — Sénateur NANA Charles',anon:false,xaf:15000,tier:getTier(15000),validated:true,created:'2026-02-07T12:00:00.000Z'}
+];}
+
+function defaultActualites(){return[
+  {id:'a1',title:'🌾 COSODO-CA — Lancement campagne agricole 2026',content:'La Coopérative Solidaire du Paysage Ndoubock lance sa campagne 2026. Parts sociales : 50 000 XAF/part (min. 2 parts = 100 000 XAF). Contrat OHADA délivré. Contact : +237 699 558 178 / eco2africa@gmail.com.',date:'2026-02-07',author:'JCSN',tag:'agri'},
+  {id:'a2',title:'🏟️ Op. Fourmis NDIAHA — Budget validé : 29 662 365 FCFA',content:'Budget technique validé par les ingénieurs. 5 blocs (A→E) + Place des Cérémonies. Travaux Avr.→Oct. 2026. Maître d\'œuvre : KENNE TATA CONSTRUCTION. Compte officiel CEFA AKWA — RIB 10005 00023 02988901001-44. SWIFT : CCEICMCX.',date:'2026-02-25',author:'Conseil des Notables',tag:'culture'},
+  {id:'a3',title:'🏰 Palais Royal — 1 521 250 FCFA collectés lors des vœux au Roi',content:'Lors de la cérémonie du 07/02/2026 : MEPEGUEP SINKEP Anne & groupe d\'amies (300 000 F) · TAHFIEUH MBEUGONG Jean (1 000 000 F) · Collecte générale (221 250 F). Total : 1 521 250 FCFA. Objectif total : 20 millions FCFA.',date:'2026-02-07',author:'Coordination Mewahou',tag:'culture'},
+  {id:'a4',title:'⚡ Fourmilière active — Chantier NDIAHA déjà sur le terrain',content:'Bien avant le coup de pioche officiel du 1ᵉʳ Avril 2026, le chantier préparatoire est actif : 2 portes fabriquées et installées sur le dôme d\'entrée (reconverti en magasin de matériaux), chantier de sciage en activité avec près de 100 planches et lattes stockées. La fourmilière Mewahou s\'active !',date:'2026-03-07',author:'Coordination Mewahou',tag:'culture'},
+  {id:'a5',title:'🌾 Installation officielle de M. DAMDJA Prosper — Chef de Poste Agricole Batchingou',content:'M. DAMDJA Prosper, ITA, officiellement installé au Village Bangwe (Batchingou) en mars 2026. Présents : DAADER TAYO André, S.M. le Roi Batchingou Nana André Flobert, Adjointe au Maire, 15+ Chefs de Poste, 100+ participants. La COSODO-CA au cœur de tous les discours de l\'événement.',date:'2026-03-05',author:'JCSN — Comité d\'Initiative',tag:'instit'},
+  {id:'a6',title:'🌦️ Prévision saison des pluies 2026 — Démarrage 17-27 Mars',content:'Direction de la Météorologie Nationale (03/03/2026) : démarrage de la saison pluvieuse prévu entre le 17 et le 27 mars 2026 pour la Région de l\'Ouest. Conseils : attendre la confirmation avant de semer, vérifier les toitures.',date:'2026-03-03',author:'Météo Nationale — Service Météorologie Ouest',tag:'meteo'},
+  {id:'a7',title:'🏟️ Premiers contributeurs Esplanade : MBEU WEMBA & MEKWA FIEU POUSSEU',content:'Liste ouverte le 01/03/2026 — Op. Fourmis NDIAHA : MBEU WEMBA KEMADJOU Mathieu (200 000 F) et MEKWA FIEU POUSSEU JEANNE D\'ARC (40 000 F) ouvrent la marche. Collectes précédentes : assise Douala (172 000 F) + cérémonie vœux au Roi (74 000 F) + Sénateur NANA Charles (1 carton de peinture). Total initial : 486 000 F CFA.',date:'2026-03-01',author:'Coordination Mewahou',tag:'culture'},
+  {id:'a8',title:'📖 Encyclopédie Éco-tour Ngatchou — Partenaires recherchés',content:'Le projet encyclopédie culturelle & écotouristique de Batchingou (200 pages + app mobile) recherche partenaires et contributeurs pour son lancement au Festival Ngatchou Novembre 2026. Contact : JCSN +237 699 558 178 / eco2africa@gmail.com.',date:'2026-02-15',author:'JCSN',tag:'culture'},
+  {id:'a9',title:'🏛️ Gouvernance NDIAHA — Composition officielle',content:'Gouvernance complète validée : Parrain Royal S.M. NANA ANDRÉ FLOBERT · Coordonnateur MBEU WEMBA KEMADJOU · Gestionnaire TAFIEU MBEUGOG TCHAKOUNTE Jean · Commissaire aux comptes WEMBA SAHAKENGNIEU NGONGANG A. · Contrôle QSE Ing. KEPGANG Yannick · Ing. Eau NANSI Cabrel · MO KENNE TATA CONSTRUCTION · Communication Diaspora MEFOUOGAP NGANSO Sylvie · Assist. Technique MBEUH LA\'H Jean Claude STONE NJOMKAP.',date:'2026-03-07',author:'Conseil des Notables',tag:'instit'}
+];}
+
+/* DATA */
+function loadData(){
+  loadMediaStore();
+  try{
+    const sp=localStorage.getItem('bat_p_v90'),sc=localStorage.getItem('bat_c_v90'),sa=localStorage.getItem('bat_a_v90'),sh=localStorage.getItem('bat_hero_v90');
+    projects=sp?JSON.parse(sp):defaultProjects();
+    contribs=sc?JSON.parse(sc):defaultContribs();
+    actualites=sa?JSON.parse(sa):defaultActualites();
+    if(sh){heroBgUrl=sh;applyHeroBg();}
+    if(!sp)save();
+  }catch(e){projects=defaultProjects();contribs=defaultContribs();actualites=defaultActualites();save();}
+}
+function save(){
+  try{localStorage.setItem('bat_p_v90',JSON.stringify(projects));localStorage.setItem('bat_c_v90',JSON.stringify(contribs));localStorage.setItem('bat_a_v90',JSON.stringify(actualites));}catch(e){}
+  updateQStats();
+  const chip=document.getElementById('saveChip');chip.classList.add('on');clearTimeout(chip._t);chip._t=setTimeout(()=>chip.classList.remove('on'),2200);
+  const t=document.getElementById('lastSaveTime');if(t)t.textContent='Sauvegardé à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+}
+function setHeroBg(e){
+  const f=e.target.files[0];if(!f)return;
+  if(f.size>3*1024*1024){toast('⚠️ Image trop lourde (max 3 Mo)');e.target.value='';return;}
+  const r=new FileReader();
+  r.onload=ev=>{heroBgUrl=ev.target.result;applyHeroBg();try{localStorage.setItem('bat_hero_v90',heroBgUrl);}catch(err){}toast('🏔️ Photo Mont Ndoubock appliquée !');};
+  r.readAsDataURL(f);e.target.value='';
+}
+function applyHeroBg(){
+  const bg=document.getElementById('heroBg');
+  if(bg&&heroBgUrl){bg.style.backgroundImage=`url('${heroBgUrl}')`;bg.style.backgroundSize='cover';bg.style.backgroundPosition='center 40%';bg.style.opacity='.58';bg.classList.remove('hero-bg-default');}
+}
+
+function catBadge(cat){const m=CAT_META[cat]||{label:cat,cls:'cat-infra'};return`<span class="cat-badge ${m.cls}">${m.label}</span>`;}
+function prioBadge(prio){if(!prio||prio==='normal')return'';const m=PRIO_META[prio]||PRIO_META.normal;return`<span class="prio-badge ${m.cls}">${m.label}</span>`;}
+
+function renderCarousel(){
+  const c=document.getElementById('carousel');if(!c)return;
+  c.innerHTML=projects.map(p=>{
+    const s=projStats(p.id),pct=p.target>0?Math.min((s.total/p.target)*100,100):0;
+    const sb=p.status==='active'?'status-active':p.status==='completed'?'status-completed':'status-planned';
+    const sl=p.status==='active'?'✅ Actif':p.status==='completed'?'🎉 Terminé':'📅 Planifié';
+    const cc=p.priority==='urgent'?'ccard-urgent':p.priority==='high'?'ccard-high':p.priority==='medium'?'ccard-medium':'';
+    const media=getProjectMedia(p);
+    const imgHtml=media?`<img src="${media.src}" alt="${p.shortName||p.name}" loading="lazy">`:`<div class="ccard-img-ph"><span class="ccard-img-icon">${p.icon}</span></div>`;
+    return`<article class="ccard ${cc}" onclick="viewProj('${p.id}')">
+      <div class="ccard-img">${imgHtml}</div>
+      <div class="ccard-body">
+        <div style="display:flex;justify-content:space-between;align-items:start;gap:.25rem;margin-bottom:.2rem">
+          <div class="ccard-title">${p.shortName||p.name}</div>
+          <span class="badge ${sb}" style="flex-shrink:0">${sl}</span>
+        </div>
+        <div style="margin-bottom:.3rem">${catBadge(p.cat)}</div>
+        <div class="ccard-loc">📍 ${p.loc||'—'}</div>
+        <div class="ccard-prog-hdr"><span>Financement</span><span style="color:var(--g)">${pct.toFixed(1)}%</span></div>
+        <div class="ccard-prog-bar"><div class="ccard-prog-fill" style="width:${pct}%"></div></div>
+        <div class="ccard-footer"><span class="ccard-amt">${fmtCur(s.total)}</span><span style="font-size:.7rem;color:var(--light)">👥 ${s.contributors}</span></div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function setCatFilter(cat,btn){catFilter_=cat;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));if(btn)btn.classList.add('on');renderProjects();}
+
+function renderProjects(){
+  const g=document.getElementById('projectsGrid');if(!g)return;
+  const q=(document.getElementById('searchInput')?.value||'').toLowerCase().trim();
+  let list=projects.filter(p=>!q||(p.name+p.desc+p.loc+p.shortName).toLowerCase().includes(q));
+  if(catFilter_!=='all')list=list.filter(p=>p.cat===catFilter_);
+  const po={urgent:0,high:1,medium:2,normal:3};
+  list.sort((a,b)=>(po[a.priority]||3)-(po[b.priority]||3));
+  document.getElementById('projCountBadge').textContent=projects.length;
+  if(!list.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--light)"><div style="font-size:4rem">🔍</div><p>Aucun projet trouvé</p></div>';return;}
+  g.innerHTML=list.map((p,i)=>{
+    const s=projStats(p.id),pct=p.target>0?Math.min((s.total/p.target)*100,100):0;
+    const sb=p.status==='active'?'status-active':p.status==='completed'?'status-completed':'status-planned';
+    const sl=p.status==='active'?'✅ Actif':p.status==='completed'?'🎉 Terminé':'📅 Planifié';
+    const bc=p.priority==='urgent'?'pcard-urgent':p.priority==='high'?'pcard-high':p.priority==='medium'?'pcard-medium':'';
+    const media=getProjectMedia(p);
+    const mediaHtml=`<div class="proj-media" id="media_${p.id}">
+      ${media
+        ?`${media.type==='video'?`<video src="${media.src}" controls style="width:100%;height:100%;object-fit:cover"></video>`:`<img src="${media.src}" alt="${p.name}" loading="lazy">`}
+         ${isAdmin?`<div class="media-overlay"><button class="media-btn" onclick="event.stopPropagation();showMediaManager('${p.id}')">🖼️ Changer</button><button class="media-btn media-btn-r" onclick="event.stopPropagation();clearProjMedia('${p.id}')">✖</button></div>`:''}`
+        :`<div class="proj-media-ph" onclick="event.stopPropagation();showMediaManager('${p.id}')"><span>${p.icon}</span><p>📷 Ajouter photo / vidéo</p></div>`}
+    </div>`;
+    /* Chantier actif */
+    const chantierHtml=p.chantierActif?`<div class="chantier-box">
+      <div class="chantier-box-title"><span>🐜</span><span>Chantier actif — Travaux préparatoires en cours</span></div>
+      ${(p.chantierDetails||[]).map(d=>`<div class="chantier-item"><span>${d.ico}</span><span><strong></strong>${d.txt}</span></div>`).join('')}
+    </div>`:'';
+    /* Blocs esplanade */
+    const blocsHtml=p.isEsplanade?`<div class="blocs-section">
+      <div class="blocs-title">🏗️ Décomposition budgétaire par Bloc</div>
+      <div class="blocs-grid">${(p.blocs||[]).map(b=>`<div class="bloc-item"><span class="bloc-v">${fmtShort(b.budget)} F</span><span class="bloc-l">${b.label} · ${b.desc}${b.surface?` · ${b.surface}`:''}</span></div>`).join('')}</div>
+      <div class="blocs-footer">🏗️ Maître d'œuvre : <strong>KENNE TATA CONSTRUCTION</strong> · Commissaire aux comptes : <strong>NGONGANG A.</strong></div>
+    </div>`:'';
+    /* COSODO */
+    const cosodoHtml=p.isCosodo?`<div style="margin:.5rem 0"><div style="font-size:.75rem;font-weight:800;margin-bottom:.35rem">🔑 Modalités de participation :</div>
+      <div class="cosodo-opts-grid">${(p.cosodo_options||[]).map(o=>`<div class="cosodo-opt" onclick="event.stopPropagation();showCosodoContrib('${p.id}','${o.id}')"><span class="co-ico">${o.icon}</span>${o.title}</div>`).join('')}</div>
+    </div>`:'';
+    return`<article class="pcard ${bc}">
+      <div class="pcard-hdr" style="background:${GRADS[i%GRADS.length]}">
+        <div class="pcard-hdr-top">
+          <span class="pcard-icon">${p.icon||'📋'}</span>
+          <div style="display:flex;flex-direction:column;align-items:end;gap:.25rem">
+            <span class="badge ${sb}">${sl}</span>
+            ${p.priority&&p.priority!=='normal'?prioBadge(p.priority):''}
+            ${p.chantierActif?'<span class="badge" style="background:rgba(126,200,80,.9);color:#fff;font-size:.62rem">🐜 Chantier actif</span>':''}
+          </div>
+        </div>
+        <h3 class="pcard-title">${p.name}</h3>
+        <div style="margin:.2rem 0">${catBadge(p.cat)}</div>
+        <div class="pcard-loc">📍 ${p.loc||'—'}</div>
+        <div class="pcard-resp">👤 ${p.responsible||'—'}</div>
+      </div>
+      <div class="pcard-body">
+        ${mediaHtml}
+        <p class="pcard-desc">${p.desc||''}</p>
+        ${chantierHtml}${blocsHtml}${cosodoHtml}
+        <div class="prog-row"><span>Financement</span><span style="color:var(--g)">${pct.toFixed(1)}%</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+        ${pct>=100?`<div class="milestone">🎉 Objectif atteint !</div>`:pct>=50?`<div class="milestone">🚀 Mi-chemin — Reste : ${fmtCur(Math.max(0,p.target-s.total))}</div>`:pct>0?`<div class="milestone" style="border-left-color:var(--warn);background:linear-gradient(90deg,#fffbeb,#fef3c7)">⚡ ${pct.toFixed(1)}% — Reste : ${fmtCur(Math.max(0,p.target-s.total))}</div>`:''}
+        <div class="pstats-row">
+          <div class="pstat"><div class="pstat-l">Collecté</div><div class="pstat-v">${fmtCur(s.total)}</div></div>
+          <div class="pstat"><div class="pstat-l">Objectif</div><div class="pstat-v">${fmtCur(p.target)}</div></div>
+        </div>
+        <div class="pstats-row">
+          <div class="pstat"><div class="pstat-l">👥 Contributeurs</div><div class="pstat-v">${s.contributors}</div></div>
+          <div class="pstat"><div class="pstat-l">📅 Livraison</div><div class="pstat-v" style="font-size:.78rem">${fmtDate(p.end)}</div></div>
+        </div>
+        <div class="pcard-btns">
+          <button class="btn btn-ok btn-lg" onclick="${p.isCosodo?`showCosodoContrib('${p.id}','')`:`showContrib('${p.id}')`}">❤️ Participer</button>
+          <button class="btn btn-w btn-lg" onclick="viewProj('${p.id}')">📊 Détails</button>
+        </div>
+        ${isAdmin?`<button class="btn btn-y" onclick="editProj('${p.id}')" style="width:100%;margin-top:.45rem">✏️ Modifier</button>`:''}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* MEDIA MANAGER */
+function showMediaManager(pid){
+  const p=projects.find(x=>x.id===pid);if(!p)return;
+  const current=getProjectMedia(p);
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="mediaMod" onclick="closeMod(event,'mediaMod')">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:460px">
+      <div class="modal-hdr"><span class="modal-title">🖼️ Média — ${p.shortName||p.name}</span><button class="btn btn-ic" onclick="closeMod(null,'mediaMod')">✖</button></div>
+      <div class="modal-body">
+        ${current?`<div style="margin-bottom:.75rem;border-radius:.6rem;overflow:hidden;max-height:180px">${current.type==='video'?`<video src="${current.src}" controls style="width:100%;max-height:180px"></video>`:`<img src="${current.src}" alt="Aperçu" style="width:100%;max-height:180px;object-fit:cover">`}</div>`:''}
+        <div style="background:#f9fafb;border:2px dashed var(--bdr);border-radius:.75rem;padding:1rem;margin-bottom:.75rem">
+          <div style="font-weight:800;font-size:.85rem;margin-bottom:.5rem">📁 Charger depuis mon appareil</div>
+          <label class="btn btn-g" style="width:100%;cursor:pointer;justify-content:center">📷 Choisir photo ou vidéo<input type="file" accept="image/*,video/*" onchange="handleMediaUpload(event,'${pid}')" style="display:none"></label>
+          <div class="upload-progress" id="uploadProg_${pid}">⏳ Chargement…</div>
+        </div>
+        <div style="background:#f9fafb;border:2px solid var(--bdr);border-radius:.75rem;padding:1rem;margin-bottom:.75rem">
+          <div style="font-weight:800;font-size:.85rem;margin-bottom:.5rem">🔗 URL d'image en ligne</div>
+          <input type="url" class="finput" id="mediaUrlInput_${pid}" value="${(current?.src&&!current.src.startsWith('data:'))?current.src:''}" placeholder="https://…/photo.jpg">
+          <div id="urlPreview_${pid}" style="margin-top:.5rem;display:none;border-radius:.5rem;overflow:hidden;max-height:140px"><img id="urlPreviewImg_${pid}" src="" alt="Aperçu" style="width:100%;max-height:140px;object-fit:cover" onerror="document.getElementById('urlPreview_${pid}').style.display='none'"></div>
+          <div style="display:flex;gap:.4rem;margin-top:.5rem">
+            <button class="btn btn-w" style="flex:1" onclick="previewMediaUrl('${pid}')">👁️ Aperçu</button>
+            <button class="btn btn-ok" style="flex:1" onclick="applyMediaUrl('${pid}')">✅ Enregistrer</button>
+          </div>
+        </div>
+        ${current?`<button class="btn btn-r" style="width:100%" onclick="clearProjMedia('${pid}');closeMod(null,'mediaMod')">🗑️ Supprimer le média</button>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+function handleMediaUpload(e,pid){
+  const f=e.target.files[0];if(!f)return;
+  const isVideo=f.type.startsWith('video/');
+  if(f.size>(isVideo?15:5)*1024*1024){toast(`⚠️ Fichier trop lourd (max ${isVideo?'15':'5'} Mo)`);e.target.value='';return;}
+  const prog=document.getElementById(`uploadProg_${pid}`);if(prog)prog.classList.add('on');
+  const r=new FileReader();
+  r.onload=ev=>{setMedia(pid,{type:isVideo?'video':'image',src:ev.target.result,name:f.name,savedAt:new Date().toISOString()});if(prog)prog.classList.remove('on');closeMod(null,'mediaMod');renderProjects();renderCarousel();toast(`✅ ${isVideo?'Vidéo':'Photo'} enregistrée !`);};
+  r.onerror=()=>{if(prog)prog.classList.remove('on');toast('❌ Erreur de lecture');};
+  r.readAsDataURL(f);e.target.value='';
+}
+function previewMediaUrl(pid){const url=document.getElementById(`mediaUrlInput_${pid}`)?.value||'';const prev=document.getElementById(`urlPreview_${pid}`);const img=document.getElementById(`urlPreviewImg_${pid}`);if(url&&prev&&img){prev.style.display='block';img.src=url;}}
+function applyMediaUrl(pid){const url=document.getElementById(`mediaUrlInput_${pid}`)?.value||'';if(!url){toast('⚠️ URL requise');return;}setMedia(pid,{type:'image',src:url,isUrl:true,savedAt:new Date().toISOString()});closeMod(null,'mediaMod');renderProjects();renderCarousel();toast('🖼️ Image URL enregistrée !');}
+function clearProjMedia(pid){if(!confirm('Supprimer le média ?'))return;removeMedia(pid);projects=projects.map(p=>p.id===pid?{...p,img:'',imgUrl:''}:p);save();renderProjects();renderCarousel();toast('🗑️ Média supprimé');}
+
+/* COSODO CONTRIB */
+const RETURN_TYPES={profit:{label:'Partage bénéfices',rate:'3–8%/an',cls:'green'},harvest:{label:'Retour en nature',rate:'Saison 2026',cls:''},goods:{label:'Pré-livraison garantie',rate:'Prix producteur',cls:''},social:{label:'Impact social',rate:'Non monétaire',cls:'gold'},interest:{label:'Intérêts solidaires',rate:'2–5%/an',cls:''}};
+function showCosodoContrib(pid,optId){
+  const p=projects.find(pr=>pr.id===pid);if(!p)return;const ct=p.contacts||{};
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="cosodoBg" onclick="closeMod(event,'cosodoBg')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-hdr"><span class="modal-title">🌾 COSODO-CA — Participer</span><button class="btn btn-ic" onclick="closeMod(null,'cosodoBg')">✖</button></div>
+      <div class="modal-body">
+        <div class="token-section">
+          <div class="token-title">🪙 Tokenisation & Investissement Solidaire</div>
+          <div style="font-size:.78rem;opacity:.9;line-height:1.65">Votre contribution est convertie en <strong>tokens solidaires</strong> (1 token = 100 000 XAF). Cadre légal : <strong>OHADA</strong>. Saison pluvieuse 2026 : démarrage prévu 17–27 Mars.</div>
+          <div class="token-grid">
+            <div class="tg-item"><div class="tg-v">100 000 XAF</div><div class="tg-l">par token</div></div>
+            <div class="tg-item"><div class="tg-v">3–8%</div><div class="tg-l">retour annuel</div></div>
+            <div class="tg-item"><div class="tg-v">12–24 mois</div><div class="tg-l">horizon min.</div></div>
+            <div class="tg-item"><div class="tg-v">OHADA</div><div class="tg-l">cadre légal</div></div>
+          </div>
+        </div>
+        <div class="transfer-box">
+          <div class="transfer-box-t">📱 Coordonnées COSODO-CA</div>
+          <div class="transfer-row"><span class="transfer-label">📱 MTN MoMo</span><span class="transfer-value"><strong>${ct.mtn||'—'}</strong><button class="copy-btn" onclick="copyTxt('${ct.mtn||''}')">📋</button></span></div>
+          <div class="transfer-row"><span class="transfer-label">📱 Orange/WA</span><span class="transfer-value"><strong>${ct.orange||'—'}</strong><button class="copy-btn" onclick="copyTxt('${ct.orange||''}')">📋</button></span></div>
+          <div class="transfer-row"><span class="transfer-label">📧 Email</span><span class="transfer-value"><strong>${p.email||'—'}</strong><button class="copy-btn" onclick="copyTxt('${p.email||''}')">📋</button></span></div>
+        </div>
+        <div class="diaspora-section">
+          <div class="diaspora-title">🌍 Transferts Diaspora</div>
+          <div class="diaspora-grid">${[{ico:'💸',n:'Wise',r:'Frais mini'},{ico:'🌐',n:'WorldRemit',r:'Rapide'},{ico:'🏦',n:'Western Union',r:'Fiable'},{ico:'💳',n:'MoneyGram',r:'Global'},{ico:'📲',n:'Remitly',r:'Mobile'},{ico:'🌊',n:'Wave',r:'Afrique'}].map(m=>`<div class="diaspora-method"><span class="dm-ico">${m.ico}</span><span class="dm-name">${m.n}</span><span class="dm-rate">${m.r}</span></div>`).join('')}</div>
+        </div>
+        <div style="font-weight:800;font-size:.88rem;margin-bottom:.5rem">Choisissez votre modalité :</div>
+        <div class="cosodo-opts-list">${(p.cosodo_options||[]).map(o=>{const rt=RETURN_TYPES[o.returnType]||{};return`<div class="cosodo-opt-card ${o.id===optId?'selected':''}" id="copt_${o.id}" onclick="selectCosodoOpt('${o.id}')"><div class="coc-title">${o.icon} ${o.fullTitle||o.title}</div><div class="coc-desc">${o.desc}</div><div class="coc-pills"><span class="coc-pill ${rt.cls||''}">${rt.label||'Retour variable'}</span><span class="coc-pill">${rt.rate||'—'}</span>${o.exitMonths>0?`<span class="coc-pill">Exit après ${o.exitMonths} mois</span>`:'<span class="coc-pill gold">Don solidaire</span>'}</div></div>`;}).join('')}</div>
+        <div class="token-section" style="margin-top:.5rem">
+          <div class="token-title">🚪 Options de sortie</div>
+          <div class="exit-opts">
+            <div class="exit-opt selected" id="exit_stay" onclick="selectExit('stay')"><div class="exit-opt-t">💎 Rester membre — Bénéfices annuels</div><div class="exit-opt-d">Percevez votre retour sans retrait du capital.</div></div>
+            <div class="exit-opt" id="exit_partial" onclick="selectExit('partial')"><div class="exit-opt-t">🔄 Retrait partiel 50% après 12 mois</div><div class="exit-opt-d">Sur justificatif.</div></div>
+            <div class="exit-opt" id="exit_full" onclick="selectExit('full')"><div class="exit-opt-t">🔓 Sortie totale après 24 mois</div><div class="exit-opt-d">Remboursement total + intérêts.</div></div>
+            <div class="exit-opt" id="exit_transfer" onclick="selectExit('transfer')"><div class="exit-opt-t">🤝 Cession de parts</div><div class="exit-opt-d">Transférez vos tokens à un autre membre.</div></div>
+          </div>
+        </div>
+        <div class="warn-box" style="margin-top:.75rem"><div class="warn-box-t">⚠️ Démarrage immédiat — Campagne 2026</div><p style="font-size:.8rem;margin-top:.25rem">Un contrat OHADA vous sera fourni. Contactez JCSN directement.</p></div>
+        <form onsubmit="handleCosodoContrib(event,'${pid}')">
+          <input type="hidden" name="exitOption" id="exitOptionVal" value="stay">
+          <div class="fg"><label class="flabel">Nom complet *</label><input type="text" class="finput" name="name" required placeholder="Nom et prénom"></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="flabel">Téléphone / WhatsApp *</label><input type="tel" class="finput" name="phone" required placeholder="+237 6XX XXX XXX"></div>
+            <div class="fg"><label class="flabel">Pays de résidence</label><input type="text" class="finput" name="country" placeholder="Ex: France, Cameroun"></div>
+          </div>
+          <div class="fg"><label class="flabel">Modalité *</label><select class="fselect" name="modality" id="cosodoModalitySel">${(p.cosodo_options||[]).map(o=>`<option value="${o.id}" ${o.id===optId?'selected':''}>${o.icon} ${o.fullTitle||o.title}</option>`).join('')}</select></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="flabel">Montant *</label><input type="number" class="finput" name="amount" min="0" step="1000" required placeholder="Min. 100 000" oninput="calcTokens(this)"><div class="token-calc" id="tokenCalc"></div></div>
+            <div class="fg"><label class="flabel">Devise</label><select class="fselect" name="currency"><option value="XAF">XAF (FCFA)</option><option value="EUR">EUR (€)</option><option value="USD">USD ($)</option><option value="CAD">CAD ($CA)</option><option value="GBP">GBP (£)</option></select></div>
+          </div>
+          <div class="fg"><label class="flabel">Message / Questions</label><textarea class="ftextarea" name="msg" placeholder="Vos questions ou disponibilité…"></textarea></div>
+          <label class="check-row"><input type="checkbox" class="check-in" name="anon"><span>Contribution anonyme</span></label>
+          <button type="submit" class="btn btn-ok btn-lg" style="width:100%;margin-top:.875rem">🌾 Enregistrer ma participation COSODO</button>
+        </form>
+      </div>
+    </div>
+  </div>`;
+}
+function calcTokens(inp){const v=parseFloat(inp.value)||0,tokens=Math.floor(v/100000);const el=document.getElementById('tokenCalc');if(el&&v>0){el.style.display='block';el.textContent=`🪙 ≈ ${tokens} token${tokens>1?'s':''} · Retour estimé : ${fmtCur(Math.round(v*0.05))}/an`;}else if(el){el.style.display='none';}}
+function selectCosodoOpt(id){document.querySelectorAll('.cosodo-opt-card').forEach(el=>el.classList.remove('selected'));document.getElementById(`copt_${id}`)?.classList.add('selected');const sel=document.getElementById('cosodoModalitySel');if(sel)sel.value=id;}
+function selectExit(id){document.querySelectorAll('.exit-opt').forEach(el=>el.classList.remove('selected'));document.getElementById(`exit_${id}`)?.classList.add('selected');const inp=document.getElementById('exitOptionVal');if(inp)inp.value=id;}
+function handleCosodoContrib(e,pid){
+  e.preventDefault();const fd=new FormData(e.target);
+  const xaf=parseFloat(fd.get('amount')||0)*(RATES[fd.get('currency')]||1);
+  const tokens=Math.floor(xaf/100000);
+  const c={id:Date.now().toString(),projId:pid,projName:'COSODO-CA',name:fd.get('name'),email:'',phone:fd.get('phone'),addr:fd.get('country')||'',amount:fd.get('amount'),currency:fd.get('currency'),type:'monetary',natDesc:`Modalité: ${fd.get('modality')} · Exit: ${fd.get('exitOption')} · Tokens: ${tokens}`,natVal:'',msg:fd.get('msg')||'',anon:fd.get('anon')==='on',xaf,tier:getTier(xaf),tokens,exitOption:fd.get('exitOption'),validated:false,created:new Date().toISOString()};
+  contribs.push(c);save();closeMod(null,'cosodoBg');toast(`✅ Participation COSODO enregistrée ! ${tokens} token(s) 🪙`);renderHomeContribs();
+}
+
+/* STANDARD CONTRIBUTION */
+function showContrib(pid){
+  const p=projects.find(pr=>pr.id===pid);if(!p)return;
+  if(p.isCosodo){showCosodoContrib(pid,'');return;}
+  const ct=p.contacts||{};
+  const blocOpts=p.isEsplanade?`<div class="fg"><label class="flabel">🏗️ Bloc à financer (optionnel)</label>
+    <select class="fselect" name="bloc"><option value="">— Contribution générale NDIAHA —</option>
+    ${(p.blocs||[]).map(b=>`<option value="${b.id}">${b.label} — ${b.desc} · ${b.surface||''} (Budget : ${fmtCur(b.budget)})</option>`).join('')}
+    </select></div>`:'';
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="cModal" onclick="closeMod(event,'cModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-hdr"><span class="modal-title">${p.icon} ${p.shortName||p.name}</span><button class="btn btn-ic" onclick="closeMod(null,'cModal')">✖</button></div>
+      <div class="modal-body">
+        <div class="transfer-box">
+          <div class="transfer-box-t">💳 Coordonnées de versement</div>
+          ${ct.mtn&&ct.mtn!=='À définir'?`<div class="transfer-row"><span class="transfer-label">📱 MTN MoMo</span><span class="transfer-value"><strong>${ct.mtn}</strong><button class="copy-btn" onclick="copyTxt('${ct.mtn}')">📋</button></span></div>`:''}
+          ${ct.orange&&ct.orange!=='À définir'?`<div class="transfer-row"><span class="transfer-label">📱 Orange Money</span><span class="transfer-value"><strong>${ct.orange}</strong><button class="copy-btn" onclick="copyTxt('${ct.orange}')">📋</button></span></div>`:''}
+          ${ct.rib?`<div class="transfer-row"><span class="transfer-label">📋 RIB complet</span><span class="transfer-value"><strong>${ct.rib}</strong><button class="copy-btn" onclick="copyTxt('${ct.rib}')">📋</button></span></div>`:''}
+          ${ct.swift?`<div class="transfer-row"><span class="transfer-label">🌐 SWIFT/BIC</span><span class="transfer-value"><strong>${ct.swift}</strong><button class="copy-btn" onclick="copyTxt('${ct.swift}')">📋</button></span></div>`:''}
+          ${ct.bankName?`<div class="transfer-row"><span class="transfer-label">🏛️ Établissement</span><span class="transfer-value">${ct.bankName}</span></div>`:''}
+          ${ct.accountName?`<div class="transfer-row"><span class="transfer-label">👤 Bénéficiaire</span><span class="transfer-value"><strong>${ct.accountName}</strong></span></div>`:''}
+          <div style="font-size:.73rem;color:#065f46;margin-top:.4rem">👤 Coordonnateur : <strong>${p.responsible||'—'}</strong></div>
+        </div>
+        <div class="diaspora-section" style="margin-bottom:.875rem">
+          <div class="diaspora-title">🌍 Transferts depuis la Diaspora</div>
+          <div class="diaspora-grid">${[{ico:'💸',n:'Wise',r:'Frais mini'},{ico:'🌐',n:'WorldRemit',r:'Rapide'},{ico:'🏦',n:'Western Union',r:'Fiable'},{ico:'💳',n:'MoneyGram',r:'Global'},{ico:'📲',n:'Remitly',r:'Mobile'},{ico:'🌊',n:'Wave',r:'Afrique'}].map(m=>`<div class="diaspora-method"><span class="dm-ico">${m.ico}</span><span class="dm-name">${m.n}</span><span class="dm-rate">${m.r}</span></div>`).join('')}</div>
+        </div>
+        <div class="warn-box"><div class="warn-box-t">⚠️ Important</div><p style="font-size:.79rem;margin-top:.2rem">Effectuez d'abord votre versement, puis remplissez ce formulaire. Un reçu vous sera délivré.</p></div>
+        <form onsubmit="handleContrib(event,'${p.id}')">
+          <div class="fg"><label class="flabel">Nom complet *</label><input type="text" class="finput" name="name" required placeholder="Nom et prénom"></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="flabel">Email</label><input type="email" class="finput" name="email" placeholder="email@…"></div>
+            <div class="fg"><label class="flabel">Téléphone *</label><input type="tel" class="finput" name="phone" required placeholder="+237 6XX XX XX XX"></div>
+          </div>
+          <div class="fg"><label class="flabel">Ville / Pays</label><input type="text" class="finput" name="addr" placeholder="Ex: Paris, France"></div>
+          ${blocOpts}
+          <div class="fg"><label class="flabel">Type de contribution</label>
+            <select class="fselect" name="type" onchange="toggleType(this)"><option value="monetary">💰 Monétaire</option><option value="nature">🎁 En nature</option></select>
+          </div>
+          <div id="moneyFlds"><div class="fgrid2">
+            <div class="fg"><label class="flabel">Montant *</label><input type="number" class="finput" name="amount" min="0" step="1000"></div>
+            <div class="fg"><label class="flabel">Devise</label><select class="fselect" name="currency"><option value="XAF">XAF</option><option value="EUR">EUR</option><option value="USD">USD</option><option value="CAD">CAD</option><option value="GBP">GBP</option></select></div>
+          </div></div>
+          <div id="natureFlds" style="display:none">
+            <div class="fg"><label class="flabel">Description *</label><textarea class="ftextarea" name="natDesc" placeholder="Décrivez le don…"></textarea></div>
+            <div class="fg"><label class="flabel">Valeur estimée (XAF)</label><input type="number" class="finput" name="natVal" min="0"></div>
+          </div>
+          <div class="fg"><label class="flabel">Message (optionnel)</label><textarea class="ftextarea" name="msg" placeholder="Votre message d'encouragement…"></textarea></div>
+          <label class="check-row"><input type="checkbox" class="check-in" name="anon"><span>Contribution anonyme</span></label>
+          <button type="submit" class="btn btn-ok btn-lg" style="width:100%;margin-top:.875rem">💝 Enregistrer ma Contribution</button>
+        </form>
+      </div>
+    </div>
+  </div>`;
+}
+function toggleType(sel){document.getElementById('moneyFlds').style.display=sel.value==='monetary'?'block':'none';document.getElementById('natureFlds').style.display=sel.value==='nature'?'block':'none';}
+function handleContrib(e,pid){
+  e.preventDefault();const fd=new FormData(e.target);
+  const type=fd.get('type');
+  const xaf=type==='monetary'?parseFloat(fd.get('amount')||0)*(RATES[fd.get('currency')]||1):parseFloat(fd.get('natVal')||0);
+  const bloc=fd.get('bloc')||'';
+  const c={id:Date.now().toString(),projId:pid,projName:projects.find(p=>p.id===pid)?.shortName||'',name:fd.get('name'),email:fd.get('email')||'',phone:fd.get('phone'),addr:fd.get('addr')||'',amount:fd.get('amount'),currency:fd.get('currency')||'XAF',type,natDesc:(bloc?`Bloc ${bloc} · `:'')+( fd.get('natDesc')||''),natVal:fd.get('natVal')||'',msg:fd.get('msg')||'',anon:fd.get('anon')==='on',xaf,tier:getTier(xaf),validated:false,created:new Date().toISOString()};
+  contribs.push(c);save();closeMod(null,'cModal');toast('✅ Contribution enregistrée — En attente de validation.');renderHomeContribs();if(curView==='dashboard'&&selProj?.id===pid)renderContribList();
+}
+
+/* DASHBOARD */
+function onDashProjChange(sel){selProj=projects.find(p=>p.id===sel.value)||null;renderDashboard();}
+function renderDashboard(){
+  const sel=document.getElementById('dashProjSelectEl');
+  if(sel)sel.innerHTML='<option value="">— Choisir un projet —</option>'+projects.map(p=>`<option value="${p.id}" ${selProj?.id===p.id?'selected':''}>${p.icon} ${p.shortName||p.name}</option>`).join('');
+  if(!selProj){document.getElementById('statsOverview').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:2.5rem;color:var(--light)"><div style="font-size:3.5rem">📊</div><p>Sélectionnez un projet</p></div>';document.getElementById('contribList').innerHTML='';document.getElementById('dashChart').style.display='none';return;}
+  const s=projStats(selProj.id),pct=selProj.target>0?((s.total/selProj.target)*100).toFixed(1):0;
+  const val=contribs.filter(c=>c.projId===selProj.id&&c.validated);
+  const pend=contribs.filter(c=>c.projId===selProj.id&&!c.validated).length;
+  document.getElementById('statsOverview').innerHTML=`
+    <div class="stat-card"><div class="sc-icon">💰</div><div class="sc-label">Total Collecté</div><div class="sc-value">${fmtCur(s.total)}</div></div>
+    <div class="stat-card"><div class="sc-icon">🎯</div><div class="sc-label">Objectif</div><div class="sc-value">${fmtCur(selProj.target)}</div></div>
+    <div class="stat-card"><div class="sc-icon">📈</div><div class="sc-label">Progression</div><div class="sc-value">${pct}%</div></div>
+    <div class="stat-card"><div class="sc-icon">👥</div><div class="sc-label">Contributeurs</div><div class="sc-value">${s.contributors}</div></div>
+    <div class="stat-card"><div class="sc-icon">✅</div><div class="sc-label">Validées</div><div class="sc-value">${val.length}</div></div>
+    <div class="stat-card"><div class="sc-icon">⏳</div><div class="sc-label">En attente</div><div class="sc-value">${pend}</div></div>
+    <div class="stat-card"><div class="sc-icon">📉</div><div class="sc-label">Reste à collecter</div><div class="sc-value">${fmtShort(Math.max(0,selProj.target-s.total))}</div></div>
+    <div class="stat-card"><div class="sc-icon">💡</div><div class="sc-label">Moy./contribution</div><div class="sc-value">${val.length?fmtShort(Math.round(s.total/val.length)):0}</div></div>`;
+  renderMiniChart();renderContribList();
+}
+function renderMiniChart(){
+  if(!selProj)return;
+  const el=document.getElementById('dashChart'),chartEl=document.getElementById('miniChart'),labEl=document.getElementById('chartLabels');
+  const val=contribs.filter(c=>c.projId===selProj.id&&c.validated).sort((a,b)=>new Date(a.created)-new Date(b.created));
+  if(val.length<2){el.style.display='none';return;}el.style.display='block';
+  const bm={};val.forEach(c=>{const d=new Date(c.created),k=d.getFullYear()+'-'+(d.getMonth()+1).toString().padStart(2,'0');bm[k]=(bm[k]||0)+(c.xaf||0);});
+  const entries=Object.entries(bm).slice(-8);const maxV=Math.max(...entries.map(e=>e[1]),1);
+  chartEl.innerHTML=entries.map(([,v])=>`<div class="chart-bar" style="height:${Math.round((v/maxV)*50)+5}px" title="${fmtCur(v)}"></div>`).join('');
+  labEl.innerHTML=entries.map(([k])=>k.split('-').reverse().slice(0,2).join('/')).join('&nbsp;&nbsp;');
+}
+function renderContribList(){
+  if(!selProj)return;
+  let list=contribs.filter(c=>c.projId===selProj.id);
+  if(tierFilter!=='all')list=list.filter(c=>c.tier?.tier===tierFilter);
+  list.sort((a,b)=>new Date(b.created)-new Date(a.created));
+  const el=document.getElementById('contribList');
+  if(!list.length){el.innerHTML='<div style="text-align:center;padding:2rem;color:var(--light)"><div style="font-size:3rem">💝</div><p>Aucune contribution</p></div>';return;}
+  el.innerHTML=list.map(c=>`<div class="c-item ${c.validated?'validated':'pending'}">
+    <div class="c-head">
+      <div>
+        <div class="c-name">${c.anon?'👤 Anonyme':(c.name||'Contributeur')}
+          ${c.tier?`<span class="badge" style="background:${c.tier.color};color:${c.tier.tier==='gold'?'#1a1a1a':'#fff'}">${c.tier.icon} ${c.tier.label}</span>`:''}
+          ${c.tokens?`<span class="badge" style="background:#064e3b;color:#fff">🪙 ${c.tokens} tokens</span>`:''}
+        </div>
+        <div class="c-amount">${fmtCur(c.xaf||0)}</div>
+      </div>
+      <div>${c.validated?'<span class="badge status-active">✅ Validée</span>':'<span class="badge" style="background:#fef3c7;color:#92400e">⏳ En attente</span>'}</div>
+    </div>
+    <div class="c-details">
+      ${c.phone?`<div>📞 ${c.phone}</div>`:''}${c.addr?`<div>🌍 ${c.addr}</div>`:''}
+      <div>📅 ${fmtDate(c.created)}</div>
+      <div>💳 ${c.type==='monetary'?'Monétaire':'En nature'}${c.currency&&c.currency!=='XAF'?` · ${c.amount} ${c.currency}`:''}</div>
+      ${c.natDesc?`<div>📝 ${c.natDesc}</div>`:''}${c.msg?`<div style="font-style:italic">"${c.msg}"</div>`:''}
+    </div>
+    ${isAdmin?`<div class="c-actions">
+      ${!c.validated?`<button class="btn btn-ok" onclick="validateC('${c.id}')">✅ Valider</button>`:''}
+      <button class="btn btn-w" onclick="printReceipt('${c.id}')">🖨️ Reçu</button>
+      <button class="btn btn-r btn-ic" onclick="deleteC('${c.id}')">🗑️</button>
+    </div>`:''}
+  </div>`).join('');
+}
+
+/* HALL */
+function renderHall(){
+  const el=document.getElementById('hallContent');if(!el)return;
+  const totalVal=contribs.filter(c=>c.validated).reduce((s,c)=>s+(c.xaf||0),0);
+  let html=`<div class="hall-hero">
+    <h2 style="font-size:1.2rem;font-weight:900;margin-bottom:.4rem">🏆 Hall de la Reconnaissance — Fourmis Magnants</h2>
+    <p style="font-size:.82rem;opacity:.9;line-height:1.6">Honneur à tous nos contributeurs. Comme les fourmis Magnants, vous bâtissez l'avenir de Batchingou pour les générations futures.</p>
+    <div class="hall-stats-row">
+      <div class="hall-stat"><div class="hall-stat-v">${new Set(contribs.filter(c=>c.validated&&!c.anon).map(c=>c.name)).size}</div><div class="hall-stat-l">Contributeurs</div></div>
+      <div class="hall-stat"><div class="hall-stat-v">${fmtShort(totalVal)}</div><div class="hall-stat-l">XAF collectés</div></div>
+      <div class="hall-stat"><div class="hall-stat-v">${contribs.filter(c=>c.validated).length}</div><div class="hall-stat-l">Contributions</div></div>
+    </div>
+  </div>
+  <!-- MÉMOIRE FONDATRICE -->
+  <div class="memoire-card">
+    <div class="memoire-title">🕯️ Mémoire Fondatrice — Figures Historiques de Batchingou</div>
+    <div class="memoire-item"><span class="mi-ico">★</span><div><div class="mi-name">FIEUH NGANGONGWOU</div><div class="mi-role">Figure fondatrice et pionnière du développement du Groupement Batchingou. Sa mémoire, sa succession et la continuité vivante de son œuvre sont honorées par chaque pierre de l'Opération NDIAHA.</div></div></div>
+    <div class="memoire-item"><span class="mi-ico">▶</span><div><div class="mi-name">MBEUH WEMBATHEU TCHIEBEP ANDRE</div></div></div>
+    <div class="memoire-item"><span class="mi-ico">▶</span><div><div class="mi-name">MEFIEU NOUBISSI CHANTAL</div></div></div>
+    <div class="memoire-item"><span class="mi-ico">▶</span><div><div class="mi-name">TAFIEU PIAME EMMANUEL</div></div></div>
+    <div class="memoire-item"><span class="mi-ico">▶</span><div><div class="mi-name">SM. FEUH-PONKOUOH KETCHA Cyrille</div><div class="mi-role">Président — Fondation NZOH Meffieu Anne Ngantchia · Figure active des initiatives caritatives Batchingou</div></div></div>
+    <div style="font-size:.7rem;color:#a888c8;font-style:italic;margin-top:.6rem;padding-top:.5rem;border-top:1px solid rgba(153,0,204,.18)">📋 Liste évolutive — contributions bienvenues pour compléter ce panthéon.</div>
+  </div>`;
+  let hasAny=false;
+  Object.entries(TIERS).reverse().forEach(([tier,td])=>{
+    const list=contribs.filter(c=>c.tier?.tier===tier&&c.validated)
+      .reduce((acc,c)=>{const name=c.anon?'👤 Anonyme':(c.name||'Contributeur');const ex=acc.find(a=>a.name===name);if(ex){ex.total+=(c.xaf||0);ex.count++;}else acc.push({name,total:c.xaf||0,count:1,proj:c.projName||''});return acc;},[])
+      .sort((a,b)=>b.total-a.total);
+    if(list.length){hasAny=true;html+=`<div class="hall-section"><div class="hall-title" style="color:${td.color}">${td.icon} Niveau ${td.label}<span class="badge" style="background:${td.color};color:${tier==='gold'?'#1a1a1a':'#fff'};margin-left:.35rem">${list.length}</span></div>
+      <div class="pgrid">${list.map((c,i)=>`<div class="c-item validated" style="position:relative">${i===0?`<div style="position:absolute;top:.5rem;right:.5rem;font-size:1.3rem">👑</div>`:''}<div class="c-name">${c.name}</div><div class="c-amount">${fmtCur(c.total)}</div><div style="font-size:.75rem;color:var(--light);margin-top:.2rem">${c.count} contribution(s)</div></div>`).join('')}</div></div>`;}
+  });
+  if(!hasAny)html+='<div style="text-align:center;padding:3rem;color:var(--light)"><div style="font-size:4rem;opacity:.25">🏆</div><p style="margin-top:.5rem;font-weight:600">Soyez parmi les premiers contributeurs !</p></div>';
+  el.innerHTML=html;
+}
+
+/* FAQ */
+let faqCatF='all';
+function filterFaq(cat,btn){faqCatF=cat;document.querySelectorAll('#faqCatBtns .btn').forEach(b=>{b.style.background='rgba(255,255,255,.12)';b.style.color='#fff';});if(btn){btn.style.background='rgba(255,255,255,.95)';btn.style.color='#065f46';}renderFaq();}
+function renderFaq(){
+  const el=document.getElementById('faqList');if(!el)return;
+  const list=faqCatF==='all'?FAQ_DATA:FAQ_DATA.filter(f=>f.cat===faqCatF);
+  el.innerHTML=list.map(f=>`<div class="faq-item"><div class="faq-q" onclick="toggleFaq('${f.id}')"><span><span class="faq-cat-pill fcp-${f.cat}">${f.cat==='cosodo'?'🌾':f.cat==='contrib'?'💝':f.cat==='tech'?'💻':'ℹ️'}</span>${f.q}</span><span class="faq-icon" id="faqico_${f.id}">+</span></div>
+    <div class="faq-a" id="faqans_${f.id}"><p style="font-size:.875rem;line-height:1.75;color:var(--mid);padding-bottom:.875rem">${f.a}</p></div></div>`).join('');
+}
+function toggleFaq(id){
+  const ans=document.getElementById(`faqans_${id}`),ico=document.getElementById(`faqico_${id}`);
+  const isOpen=ans.style.maxHeight&&ans.style.maxHeight!=='0px';
+  FAQ_DATA.forEach(f=>{const a=document.getElementById(`faqans_${f.id}`),i=document.getElementById(`faqico_${f.id}`);if(a){a.style.maxHeight='0';a.style.padding='0 1rem';}if(i)i.textContent='+';});
+  if(!isOpen&&ans){ans.style.maxHeight='600px';ans.style.padding='.875rem 1rem';if(ico)ico.textContent='×';}
+}
+
+/* HOME RECENT */
+function renderHomeContribs(){
+  const el=document.getElementById('homeRecentContribs');if(!el)return;
+  const recent=contribs.filter(c=>c.validated).sort((a,b)=>new Date(b.created)-new Date(a.created)).slice(0,5);
+  if(!recent.length){el.innerHTML='<p style="color:var(--light);font-size:.875rem">Aucune contribution validée pour le moment.</p>';return;}
+  el.innerHTML=recent.map(c=>`<div class="c-item validated" style="margin-bottom:.5rem;padding:.55rem .875rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap">
+      <div><span style="font-weight:800;font-size:.9rem">${c.anon?'👤 Anonyme':(c.name||'Contributeur')}</span>
+        ${c.tier?`<span class="badge" style="background:${c.tier.color};color:${c.tier.tier==='gold'?'#1a1a1a':'#fff'};margin-left:.3rem;font-size:.62rem">${c.tier.icon}</span>`:''}
+        <div style="font-size:.7rem;color:var(--light);margin-top:.1rem">📋 ${c.projName||'—'} · ${fmtDate(c.created)}</div>
+      </div>
+      <span style="font-weight:900;color:var(--g);white-space:nowrap">${fmtCur(c.xaf||0)}</span>
+    </div>
+  </div>`).join('');
+}
+
+/* ACTUALITES */
+const ACTU_TAGS={agri:{label:'🌾 Agriculture',cls:'actu-agri'},instit:{label:'🏛️ Institutionnel',cls:'actu-instit'},meteo:{label:'🌦️ Météo',cls:'actu-meteo'},culture:{label:'🎭 Culture',cls:'actu-culture'}};
+function renderActualites(){
+  const el=document.getElementById('actualitesList'),btn=document.getElementById('addActuBtn');
+  if(btn)btn.style.display=isAdmin?'flex':'none';
+  if(!actualites.length){el.innerHTML='<p style="color:var(--light)">Aucune actualité.</p>';return;}
+  const sorted=[...actualites].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  el.innerHTML=sorted.map(a=>{
+    const tag=ACTU_TAGS[a.tag]||{label:'📰 Annonce',cls:'actu-culture'};
+    return`<article class="actu-card">
+      <span class="actu-tag ${tag.cls}">${tag.label}</span>
+      <div style="display:flex;justify-content:space-between;align-items:start;gap:.5rem;margin-bottom:.3rem;flex-wrap:wrap">
+        <h3 style="font-size:.94rem;font-weight:800;flex:1;color:var(--dark);line-height:1.35">${a.title}</h3>
+        <span style="font-size:.7rem;color:var(--light);white-space:nowrap;flex-shrink:0">📅 ${fmtDate(a.date)}</span>
+      </div>
+      <p style="font-size:.82rem;color:var(--light);line-height:1.65;margin-bottom:.4rem">${a.content}</p>
+      <div style="font-size:.7rem;color:var(--g);font-weight:700">✍️ ${a.author}</div>
+      ${isAdmin?`<div style="margin-top:.5rem"><button class="btn btn-r btn-ic" onclick="deleteActu('${a.id}')" style="width:auto;height:auto;padding:.25rem .5rem;font-size:.72rem">🗑️ Supprimer</button></div>`:''}
+    </article>`;
+  }).join('');
+}
+function showAddActu(){
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="addActuMod" onclick="closeMod(event,'addActuMod')">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:500px">
+      <div class="modal-hdr"><span class="modal-title">📰 Nouvelle Actualité</span><button class="btn btn-ic" onclick="closeMod(null,'addActuMod')">✖</button></div>
+      <div class="modal-body">
+        <form onsubmit="handleAddActu(event)">
+          <div class="fg"><label class="flabel">Titre *</label><input type="text" class="finput" name="title" required></div>
+          <div class="fg"><label class="flabel">Contenu *</label><textarea class="ftextarea" name="content" required style="min-height:100px"></textarea></div>
+          <div class="fg"><label class="flabel">Catégorie</label><select class="fselect" name="tag"><option value="culture">🎭 Culture</option><option value="agri">🌾 Agriculture</option><option value="instit">🏛️ Institutionnel</option><option value="meteo">🌦️ Météo</option></select></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="flabel">Date *</label><input type="date" class="finput" name="date" required value="${new Date().toISOString().split('T')[0]}"></div>
+            <div class="fg"><label class="flabel">Auteur *</label><input type="text" class="finput" name="author" required></div>
+          </div>
+          <button type="submit" class="btn btn-ok btn-lg" style="width:100%">✅ Publier</button>
+        </form>
+      </div>
+    </div>
+  </div>`;
+}
+function handleAddActu(e){e.preventDefault();const fd=new FormData(e.target);actualites.push({id:Date.now().toString(),title:fd.get('title'),content:fd.get('content'),date:fd.get('date'),author:fd.get('author'),tag:fd.get('tag')||'culture'});save();closeMod(null,'addActuMod');renderActualites();toast('✅ Actualité publiée !');}
+function deleteActu(id){if(!confirm('Supprimer ?'))return;actualites=actualites.filter(a=>a.id!==id);save();renderActualites();toast('🗑️ Supprimé');}
+
+/* RECEIPT */
+function printReceipt(cid){
+  const c=contribs.find(x=>x.id===cid),p=projects.find(x=>x.id===c?.projId);if(!c||!p)return;
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="receiptMod" onclick="closeMod(event,'receiptMod')">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:480px">
+      <div class="modal-hdr"><span class="modal-title">🖨️ Reçu de Contribution</span><button class="btn btn-ic" onclick="closeMod(null,'receiptMod')">✖</button></div>
+      <div class="modal-body">
+        <div class="receipt">
+          <div style="text-align:center;margin-bottom:1rem;border-bottom:1px dashed #c8d8c8;padding-bottom:.875rem"><div style="font-size:1.8rem">🐜</div><div style="font-weight:900;font-size:1rem;color:#064e3b">PLATEFORME MEWAHOU v${VERSION}</div><div style="font-size:.72rem;color:var(--light)">Groupement Batchingou · Bangangté · Ndé · Cameroun</div></div>
+          <div style="font-size:.8rem;line-height:2.2">
+            <div>📋 <strong>Projet :</strong> ${p.name}</div>
+            <div>👤 <strong>Contributeur :</strong> ${c.anon?'Anonyme':c.name}</div>
+            <div>📞 <strong>Téléphone :</strong> ${c.phone||'N/A'}</div>
+            ${c.addr?`<div>🌍 <strong>Localisation :</strong> ${c.addr}</div>`:''}
+            <div>💰 <strong>Montant :</strong> ${c.amount} ${c.currency} = <strong>${fmtCur(c.xaf)}</strong></div>
+            ${c.tokens?`<div>🪙 <strong>Tokens COSODO :</strong> ${c.tokens}</div>`:''}
+            <div>💳 <strong>Type :</strong> ${c.type==='monetary'?'Monétaire':'En nature'}</div>
+            ${c.natDesc?`<div>📝 <strong>Détails :</strong> ${c.natDesc}</div>`:''}
+            <div>📅 <strong>Date :</strong> ${fmtDate(c.created)}</div>
+            <div>✅ <strong>Statut :</strong> ${c.validated?'✅ Validée':'⏳ En attente'}</div>
+            ${c.tier?`<div>${c.tier.icon} <strong>Niveau :</strong> ${c.tier.label}</div>`:''}
+          </div>
+          <div style="border-top:1px dashed #c8d8c8;margin-top:.875rem;padding-top:.5rem;text-align:center;font-size:.65rem;color:var(--light)">Réf: ${c.id.slice(-8).toUpperCase()} · Mewahou v${VERSION} · Batchingou ${new Date().getFullYear()}</div>
+        </div>
+        <button class="btn btn-ok btn-lg" onclick="window.print()" style="width:100%;margin-top:.875rem">🖨️ Imprimer / PDF</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* VALIDATE / DELETE */
+function validateC(cid){const c=contribs.find(x=>x.id===cid),p=projects.find(x=>x.id===c?.projId);if(!c||!p)return;askPwd('Valider · '+(p.shortName||p.name),pwd=>{if(!checkPwd(pwd,p.pwdKey||p.id)&&!checkPwd(pwd,'master')){toast('❌ Mot de passe incorrect');return;}contribs=contribs.map(x=>x.id===cid?{...x,validated:true,validatedAt:new Date().toISOString()}:x);save();renderContribList();renderProjects();renderCarousel();renderHomeContribs();toast('✅ Contribution validée !');});}
+function deleteC(cid){const c=contribs.find(x=>x.id===cid),p=projects.find(x=>x.id===c?.projId);if(!c||!p)return;askPwd('Supprimer',pwd=>{if(!checkPwd(pwd,p.pwdKey||p.id)&&!checkPwd(pwd,'master')){toast('❌ Mot de passe incorrect');return;}if(!confirm('Supprimer définitivement ?'))return;contribs=contribs.filter(x=>x.id!==cid);save();renderContribList();renderProjects();renderCarousel();toast('🗑️ Supprimé');});}
+
+/* ADD/EDIT PROJECT */
+function showAddProject(){
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="addProjMod" onclick="closeMod(event,'addProjMod')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-hdr"><span class="modal-title">➕ Nouveau Projet</span><button class="btn btn-ic" onclick="closeMod(null,'addProjMod')">✖</button></div>
+      <div class="modal-body">
+        <form onsubmit="handleAddProj(event)">
+          <div class="fgrid2"><div class="fg"><label class="flabel">Nom *</label><input type="text" class="finput" name="name" required></div><div class="fg"><label class="flabel">Nom court</label><input type="text" class="finput" name="shortName"></div></div>
+          <div class="fg"><label class="flabel">Description *</label><textarea class="ftextarea" name="desc" required></textarea></div>
+          <div class="fgrid2">
+            <div class="fg"><label class="flabel">Catégorie</label><select class="fselect" name="cat"><option value="agri">🌾 Agri-Élevage</option><option value="infrastructure">🏗️ Infrastructure</option><option value="culture">🎭 Culture</option><option value="amenagement">🌳 Aménagement</option><option value="numerique">💻 Numérique</option></select></div>
+            <div class="fg"><label class="flabel">Priorité</label><select class="fselect" name="priority"><option value="urgent">🔴 URGENT</option><option value="high">🟠 Haute</option><option value="medium">🔵 Moyenne</option><option value="normal">Normale</option></select></div>
+          </div>
+          <div class="fgrid2"><div class="fg"><label class="flabel">Objectif (XAF) *</label><input type="number" class="finput" name="target" min="0" required></div><div class="fg"><label class="flabel">Statut</label><select class="fselect" name="status"><option value="active">✅ Actif</option><option value="planned">📅 Planifié</option><option value="completed">🎉 Terminé</option></select></div></div>
+          <div class="fgrid2"><div class="fg"><label class="flabel">Date début</label><input type="date" class="finput" name="start"></div><div class="fg"><label class="flabel">Date fin</label><input type="date" class="finput" name="end"></div></div>
+          <div class="fg"><label class="flabel">Localisation</label><input type="text" class="finput" name="loc"></div>
+          <div class="fg"><label class="flabel">Responsable</label><input type="text" class="finput" name="resp"></div>
+          <div class="fgrid2"><div class="fg"><label class="flabel">📱 MTN MoMo</label><input type="text" class="finput" name="mtn"></div><div class="fg"><label class="flabel">📱 Orange/WA</label><input type="text" class="finput" name="orange"></div></div>
+          <div class="fg"><label class="flabel">🏦 N° Compte / RIB</label><input type="text" class="finput" name="bank"></div>
+          <div class="fgrid2"><div class="fg"><label class="flabel">Établissement</label><input type="text" class="finput" name="bankName"></div><div class="fg"><label class="flabel">Bénéficiaire</label><input type="text" class="finput" name="accountName"></div></div>
+          <div class="fg"><label class="flabel">🔒 Mot de passe *</label><input type="password" class="finput" name="pwd" required></div>
+          <button type="submit" class="btn btn-ok btn-lg" style="width:100%">✅ Créer le Projet</button>
+        </form>
+      </div>
+    </div>
+  </div>`;
+}
+function handleAddProj(e){
+  e.preventDefault();const fd=new FormData(e.target);const id=Date.now().toString();
+  const p={id,name:fd.get('name'),shortName:fd.get('shortName')||fd.get('name').split(' ').slice(0,4).join(' '),desc:fd.get('desc'),cat:fd.get('cat'),priority:fd.get('priority'),target:parseFloat(fd.get('target'))||0,collected:0,start:fd.get('start'),end:fd.get('end'),loc:fd.get('loc'),responsible:fd.get('resp'),pwdKey:id,contacts:{mtn:fd.get('mtn')||'À définir',orange:fd.get('orange')||'À définir',bank:fd.get('bank')||'À définir',bankName:fd.get('bankName')||'',accountName:fd.get('accountName')||''},status:fd.get('status')||'active',icon:'📋',img:'',imgUrl:'',created:new Date().toISOString()};
+  projects.push(p);PWD_HASH[id]=hashPwd(fd.get('pwd'));save();closeMod(null,'addProjMod');renderAll();toast('✅ Projet créé !');
+}
+function editProj(pid){
+  const p=projects.find(x=>x.id===pid);if(!p)return;
+  askPwd('Modifier · '+(p.shortName||p.name),pwd=>{
+    if(!checkPwd(pwd,p.pwdKey||p.id)&&!checkPwd(pwd,'master')){toast('❌ Mot de passe incorrect');return;}
+    document.getElementById('modals').innerHTML=`
+    <div class="modal-bg on" id="editProjMod" onclick="closeMod(event,'editProjMod')">
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-hdr"><span class="modal-title">✏️ Modifier · ${p.icon} ${p.shortName||p.name}</span><button class="btn btn-ic" onclick="closeMod(null,'editProjMod')">✖</button></div>
+        <div class="modal-body">
+          <form onsubmit="handleEditProj(event,'${pid}')">
+            <div class="fg"><label class="flabel">Nom *</label><input type="text" class="finput" name="name" required value="${p.name}"></div>
+            <div class="fg"><label class="flabel">Description</label><textarea class="ftextarea" name="desc">${p.desc||''}</textarea></div>
+            <div class="fgrid2">
+              <div class="fg"><label class="flabel">Statut</label><select class="fselect" name="status"><option value="active" ${p.status==='active'?'selected':''}>✅ Actif</option><option value="planned" ${p.status==='planned'?'selected':''}>📅 Planifié</option><option value="completed" ${p.status==='completed'?'selected':''}>🎉 Terminé</option></select></div>
+              <div class="fg"><label class="flabel">Priorité</label><select class="fselect" name="priority"><option value="urgent" ${p.priority==='urgent'?'selected':''}>🔴 URGENT</option><option value="high" ${p.priority==='high'?'selected':''}>🟠 Haute</option><option value="medium" ${p.priority==='medium'?'selected':''}>🔵 Moyenne</option><option value="normal">Normale</option></select></div>
+            </div>
+            <div class="fg"><label class="flabel">Objectif (XAF)</label><input type="number" class="finput" name="target" value="${p.target||0}"></div>
+            <div class="fg"><label class="flabel">Responsable</label><input type="text" class="finput" name="resp" value="${p.responsible||''}"></div>
+            <div class="fgrid2"><div class="fg"><label class="flabel">MTN MoMo</label><input type="text" class="finput" name="mtn" value="${p.contacts?.mtn||''}"></div><div class="fg"><label class="flabel">Orange / WA</label><input type="text" class="finput" name="orange" value="${p.contacts?.orange||''}"></div></div>
+            <div class="fg"><label class="flabel">N° Compte / RIB</label><input type="text" class="finput" name="bank" value="${p.contacts?.bank||''}"></div>
+            <button type="submit" class="btn btn-ok btn-lg" style="width:100%">✅ Sauvegarder</button>
+          </form>
+        </div>
+      </div>
+    </div>`;
+  });
+}
+function handleEditProj(e,pid){e.preventDefault();const fd=new FormData(e.target);projects=projects.map(p=>p.id===pid?{...p,name:fd.get('name'),desc:fd.get('desc'),status:fd.get('status'),priority:fd.get('priority'),target:parseFloat(fd.get('target'))||p.target,responsible:fd.get('resp'),contacts:{...p.contacts,mtn:fd.get('mtn')||p.contacts?.mtn,orange:fd.get('orange')||p.contacts?.orange,bank:fd.get('bank')||p.contacts?.bank}}:p);save();closeMod(null,'editProjMod');renderAll();toast('✅ Modifié !');}
+
+/* ADMIN */
+function showMasterPwd(){
+  if(isAdmin){isAdmin=false;updateAdminUI();toast('🔒 Mode admin désactivé');return;}
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="masterMod" onclick="closeMod(event,'masterMod')">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:380px">
+      <div class="modal-hdr"><span class="modal-title">🔐 Accès Administrateur</span><button class="btn btn-ic" onclick="closeMod(null,'masterMod')">✖</button></div>
+      <div class="modal-body">
+        <div class="warn-box"><div class="warn-box-t">⚠️ Zone Sécurisée</div><p style="font-size:.8rem;margin-top:.2rem">Accès réservé aux administrateurs Mewahou.</p></div>
+        <form onsubmit="checkMaster(event)"><div class="fg"><label class="flabel">Mot de passe maître</label><input type="password" class="finput" id="masterIn" required autofocus></div><button type="submit" class="btn btn-ok btn-lg" style="width:100%">🔓 Déverrouiller</button></form>
+      </div>
+    </div>
+  </div>`;
+}
+function checkMaster(e){e.preventDefault();if(checkPwd(document.getElementById('masterIn').value,'master')){isAdmin=true;updateAdminUI();closeMod(null,'masterMod');toast('🔓 Mode administrateur activé');}else{toast('❌ Mot de passe incorrect');document.getElementById('masterIn').value='';document.getElementById('masterIn').focus();}}
+function updateAdminUI(){
+  const btn=document.getElementById('adminToggle'),fab=document.getElementById('fab');
+  btn.textContent=isAdmin?'🔓':'🔒';
+  btn.style.cssText=isAdmin?'background:rgba(209,250,229,.95);color:#065f46':'background:rgba(254,226,226,.9);color:#991b1b';
+  fab.style.display=isAdmin?'flex':'none';
+  renderProjects();renderCarousel();renderActualites();if(curView==='dashboard')renderContribList();
+}
+
+/* HELPERS */
+function askPwd(title,cb){
+  document.getElementById('modals').innerHTML=`
+  <div class="modal-bg on" id="pwdMod" onclick="closeMod(event,'pwdMod')">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:360px">
+      <div class="modal-hdr"><span class="modal-title">🔐 ${title}</span><button class="btn btn-ic" onclick="closeMod(null,'pwdMod')">✖</button></div>
+      <div class="modal-body">
+        <form id="pwdForm"><div class="fg"><label class="flabel">Mot de passe</label><input type="password" class="finput" id="pwdIn" required autofocus></div><button type="submit" class="btn btn-ok btn-lg" style="width:100%">✅ Confirmer</button></form>
+      </div>
+    </div>
+  </div>`;
+  window._pwdCb=cb;
+  const form=document.getElementById('pwdForm');
+  if(form)form.onsubmit=function(e){e.preventDefault();window._pwdCb(document.getElementById('pwdIn').value);closeMod(null,'pwdMod');};
+}
+
+function viewProj(pid){switchView('dashboard',document.querySelector('[data-view=dashboard]'));selProj=projects.find(p=>p.id===pid)||null;renderDashboard();}
+function filterContribs(tier,btn){tierFilter=tier;document.querySelectorAll('.tbadge').forEach(b=>b.classList.remove('on'));if(btn)btn.classList.add('on');renderContribList();}
+function projStats(pid){
+  const list=contribs.filter(c=>c.projId===pid&&c.validated);
+  const names=new Set(list.filter(c=>!c.anon).map(c=>c.name));
+  return{total:list.reduce((s,c)=>s+(c.xaf||0),0),contributors:names.size+(list.filter(c=>c.anon).length),count:list.length};
+}
+function getTier(xaf){for(const[k,t]of Object.entries(TIERS))if(xaf>=t.min&&xaf<=t.max)return{tier:k,...t};return TIERS.bronze;}
+function fmtCur(n){if(!n&&n!==0)return'0 XAF';return new Intl.NumberFormat('fr-FR').format(Math.round(n))+' XAF';}
+function fmtShort(n){if(!n&&n!==0)return'0';if(n>=1000000)return(n/1000000).toFixed(1).replace('.0','')+'M';if(n>=1000)return(n/1000).toFixed(0)+'k';return n.toString();}
+function fmtDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});}catch{return d;}}
+function toast(msg,dur=3000){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),dur);}
+function copyTxt(txt){if(!txt||txt==='À définir'||txt==='À confirmer'){toast('⚠️ Coordonnée non disponible');return;}navigator.clipboard?.writeText(txt).then(()=>toast('📋 Copié !')).catch(()=>{const el=document.createElement('textarea');el.value=txt;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);toast('📋 Copié !');});}
+function closeMod(e,id){if(e&&e.target.id!==id)return;const el=document.getElementById(id);if(el)el.remove();}
+function goHome(){switchView('home',document.querySelector('[data-view=home]'));}
+
+function switchView(name,btn){
+  curView=name;
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  ['homeView','projectsView','dashboardView','contributorsView','faqView','actualitesView'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display='none';
+  });
+  const map={home:'homeView',projects:'projectsView',dashboard:'dashboardView',contributors:'contributorsView',faq:'faqView',actualites:'actualitesView'};
+  const target=document.getElementById(map[name]);
+  if(target)target.style.display='block';
+  if(name==='home'){renderCarousel();renderHomeContribs();}
+  if(name==='projects')renderProjects();
+  if(name==='dashboard')renderDashboard();
+  if(name==='contributors')renderHall();
+  if(name==='faq')renderFaq();
+  if(name==='actualites')renderActualites();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateQStats(){
+  const val=contribs.filter(c=>c.validated);
+  const total=val.reduce((s,c)=>s+(c.xaf||0),0);
+  const names=new Set(val.filter(c=>!c.anon).map(c=>c.name));
+  const pend=contribs.filter(c=>!c.validated).length;
+  const el=id=>document.getElementById(id);
+  if(el('qs-proj'))el('qs-proj').textContent=projects.length;
+  if(el('qs-contrib'))el('qs-contrib').textContent=val.length;
+  if(el('qs-amt'))el('qs-amt').textContent=fmtShort(total);
+  if(el('qs-members'))el('qs-members').textContent=names.size;
+  if(el('qs-pend'))el('qs-pend').textContent=pend;
+  if(el('hs-proj'))el('hs-proj').textContent=projects.filter(p=>p.status==='active').length;
+  if(el('hs-total'))el('hs-total').textContent=fmtShort(total);
+  if(el('hs-contrib'))el('hs-contrib').textContent=names.size;
+  if(el('ab-proj'))el('ab-proj').textContent=projects.filter(p=>p.status==='active').length;
+  document.getElementById('projCountBadge').textContent=projects.length;
+}
+
+function renderAll(){renderCarousel();renderProjects();renderHomeContribs();renderActualites();updateQStats();}
+
+/* EXPORT / IMPORT */
+function exportData(){
+  const blob=new Blob([JSON.stringify({version:VERSION,exported:new Date().toISOString(),projects,contribs,actualites,mediaStore},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`mewahou_v${VERSION}_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();URL.revokeObjectURL(a.href);toast('📥 Export effectué !');
+}
+function importData(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(!d.projects||!d.contribs){toast('❌ Fichier invalide');return;}
+      if(!confirm(`Importer ${d.projects.length} projets et ${d.contribs.length} contributions ? Les données actuelles seront remplacées.`))return;
+      projects=d.projects;contribs=d.contribs;actualites=d.actualites||[];
+      if(d.mediaStore){mediaStore=d.mediaStore;saveMediaStore();}
+      save();renderAll();renderFaq();toast('✅ Import réussi !');
+    }catch(err){toast('❌ Erreur de lecture du fichier');}
+  };
+  r.readAsText(f);e.target.value='';
+}
+
+/* ONLINE/OFFLINE */
+window.addEventListener('online',()=>{isOnline=true;const p=document.getElementById('syncPill'),t=document.getElementById('syncTxt');if(p)p.className='sync-pill sync-on';if(t)t.textContent='En ligne';});
+window.addEventListener('offline',()=>{isOnline=false;const p=document.getElementById('syncPill'),t=document.getElementById('syncTxt');if(p)p.className='sync-pill sync-off';if(t)t.textContent='Hors ligne';});
+
+/* SCROLL */
+window.addEventListener('scroll',()=>{const su=document.getElementById('scrollUp');if(su)su.classList.toggle('show',window.scrollY>400);},{passive:true});
+
+/* INIT */
+document.addEventListener('DOMContentLoaded',()=>{
+  loadData();
+  renderAll();
+  renderFaq();
+  document.getElementById('projCountBadge').textContent=projects.length;
+  const firstTab=document.querySelector('[data-view=home]');
+  if(firstTab)firstTab.classList.add('on');
+});
+</script>
+</body>
+</html>
